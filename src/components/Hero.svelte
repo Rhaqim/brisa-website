@@ -23,7 +23,7 @@
   <!-- Dark overlay with gradient -->
   <div
     class="absolute inset-0"
-    style="background: linear-gradient(135deg, rgba(15,31,61,0.88) 0%, rgba(15,31,61,0.65) 50%, rgba(13,110,79,0.40) 100%);"
+    style="background: linear-gradient(135deg, rgba(61,16,53,0.90) 0%, rgba(61,16,53,0.68) 50%, rgba(156,49,143,0.35) 100%);"
   ></div>
 
   <!-- Decorative pattern overlay -->

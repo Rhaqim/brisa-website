@@ -8,8 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "db:setup": "node db/setup.js",
-    "db:seed-admin": "node db/seed-admin.js",
+    "db:setup": "node --env-file=.env db/setup.js",
+    "db:seed-admin": "node --env-file=.env db/seed-admin.js",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:reset": "docker compose down -v && docker compose up -d"

@@ -58,7 +58,8 @@
 <!-- Sidebar -->
 <aside
   class="fixed left-0 top-0 h-screen z-40 flex flex-col bg-navy-950 border-r border-white/5 transition-all duration-300"
-  style="width: 256px; background-color: #080F1E; {collapsed ? 'transform: translateX(-100%)' : ''}"
+  style="width: 256px; {collapsed ? 'transform: translateX(-100%)' : ''}"
+
 >
   <!-- Logo -->
   <div class="flex items-center gap-3 px-5 py-6 border-b border-white/5">
