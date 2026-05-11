@@ -1,0 +1,153 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import ImageUpload from '../../components/admin/ImageUpload.svelte';
+import { sql } from '../../lib/db';
+import { getUploadConfig } from '../../lib/cloudinary';
+
+let saved = false;
+let deleted = false;
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = String(form.get('_action') ?? '');
+
+  try {
+    if (action === 'delete') {
+      await sql`DELETE FROM gallery_images WHERE id = ${String(form.get('id'))}`;
+      deleted = true;
+    } else if (action === 'add') {
+      const url = String(form.get('url') ?? '').trim();
+      const alt_text = String(form.get('alt_text') ?? '').trim();
+      const caption = String(form.get('caption') ?? '').trim();
+      const category = String(form.get('category') ?? 'general').trim();
+
+      if (!url) {
+        error = 'Image URL is required.';
+      } else {
+        await sql`
+          INSERT INTO gallery_images (url, alt_text, caption, category)
+          VALUES (${url}, ${alt_text || null}, ${caption || null}, ${category})
+        `;
+        saved = true;
+      }
+    } else if (action === 'reorder') {
+      const ids = String(form.get('ids') ?? '').split(',').filter(Boolean);
+      for (let i = 0; i < ids.length; i++) {
+        await sql`UPDATE gallery_images SET sort_order = ${i} WHERE id = ${ids[i]}`;
+      }
+      saved = true;
+    }
+  } catch (e) {
+    error = 'Something went wrong.';
+  }
+}
+
+const images = await sql`
+  SELECT id, url, alt_text, caption, category, sort_order
+  FROM gallery_images
+  ORDER BY sort_order ASC, created_at ASC
+`;
+
+const uploadConfig = getUploadConfig();
+---
+
+<AdminLayout title="Gallery" activeSection="gallery">
+  {saved && (
+    <div class="mb-6 bg-forest/10 border border-forest/20 text-forest text-sm px-4 py-3 rounded-lg">✓ Gallery updated.</div>
+  )}
+  {deleted && (
+    <div class="mb-6 bg-gold/10 border border-gold/20 text-gold-700 text-sm px-4 py-3 rounded-lg">✓ Image removed.</div>
+  )}
+  {error && (
+    <div class="mb-6 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>
+  )}
+
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- Add new image -->
+    <div>
+      <h3 class="font-semibold text-navy mb-5">Add Image</h3>
+      <form method="POST" class="admin-card p-6 space-y-5">
+        <input type="hidden" name="_action" value="add" />
+
+        <!-- Upload widget (fills the URL input after upload) -->
+        <ImageUpload
+          client:load
+          cloudName={uploadConfig.cloudName}
+          uploadPreset={uploadConfig.uploadPreset}
+          label="Upload or paste URL"
+          targetInputId="gallery_url"
+        />
+
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Image URL *</label>
+          <input type="url" name="url" id="gallery_url" required class="input-field" placeholder="https://..." />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Alt Text</label>
+          <input type="text" name="alt_text" class="input-field" placeholder="Describe the image" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Caption (optional)</label>
+          <input type="text" name="caption" class="input-field" placeholder="Short caption…" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Category</label>
+          <select name="category" class="input-field">
+            <option value="general">General</option>
+            <option value="empowerment">Empowerment</option>
+            <option value="education">Education</option>
+            <option value="community">Community</option>
+            <option value="events">Events</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full btn-primary">Add to Gallery</button>
+      </form>
+    </div>
+
+    <!-- Current gallery -->
+    <div class="lg:col-span-2">
+      <h3 class="font-semibold text-navy mb-5">Gallery ({images.length} images)</h3>
+
+      {images.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {(images as any[]).map(image => (
+            <div class="group relative rounded-xl overflow-hidden border border-warm-200 aspect-square bg-warm-100">
+              <img
+                src={image.url}
+                alt={image.alt_text ?? ''}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <!-- Overlay -->
+              <div class="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3 p-3">
+                {image.caption && (
+                  <p class="text-white text-xs text-center line-clamp-2">{image.caption}</p>
+                )}
+                <form method="POST">
+                  <input type="hidden" name="_action" value="delete" />
+                  <input type="hidden" name="id" value={image.id} />
+                  <button
+                    type="submit"
+                    class="bg-red-500 text-white text-xs px-4 py-1.5 rounded-full hover:bg-red-600 transition-colors"
+                    onclick="return confirm('Remove this image from the gallery?')"
+                  >
+                    Remove
+                  </button>
+                </form>
+              </div>
+              <!-- Category badge -->
+              <div class="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">
+                {image.category}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20 text-gray-400 admin-card">
+          <p>No images yet. Add some to get started.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</AdminLayout>

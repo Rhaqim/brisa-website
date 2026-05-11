@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.svelte';
+import MissionSection from '../components/MissionSection.svelte';
+import PillarsSection from '../components/PillarsSection.svelte';
+import GallerySection from '../components/GallerySection.svelte';
+import ImpactStory from '../components/ImpactStory.svelte';
+import EventsPreview from '../components/EventsPreview.svelte';
+import CTASection from '../components/CTASection.svelte';
+import { getSettings } from '../lib/settings';
+import { sql } from '../lib/db';
+
+const settings = await getSettings();
+
+// Fetch upcoming events
+const events = await sql`
+  SELECT id, title, description, date, location, image_url, status
+  FROM events
+  WHERE status = 'upcoming' AND date >= NOW()
+  ORDER BY date ASC
+  LIMIT 3
+`;
+
+// Fetch featured impact story
+const [story] = await sql`
+  SELECT name, story, location, image_url
+  FROM impact_stories
+  WHERE is_featured = TRUE
+  ORDER BY sort_order ASC
+  LIMIT 1
+`;
+
+// Fetch gallery images
+const galleryImages = await sql`
+  SELECT id, url, alt_text, caption
+  FROM gallery_images
+  ORDER BY sort_order ASC
+  LIMIT 6
+`;
+
+const heroStats = [
+  { number: settings.stat_1_number || '500+', label: settings.stat_1_label || 'Women Empowered' },
+  { number: settings.stat_2_number || '50+', label: settings.stat_2_label || 'Communities Reached' },
+  { number: settings.stat_3_number || '200+', label: settings.stat_3_label || 'Scholarships Granted' },
+  { number: settings.stat_4_number || '12+', label: settings.stat_4_label || 'Years of Impact' },
+];
+
+const pillars = [
+  { title: settings.pillar_1_title || 'Empowerment', body: settings.pillar_1_body || '' },
+  { title: settings.pillar_2_title || 'Encouragement', body: settings.pillar_2_body || '' },
+  { title: settings.pillar_3_title || 'Enlightenment', body: settings.pillar_3_body || '' },
+];
+---
+
+<Layout title="Home" transparentNav={true}>
+  <!-- Hero -->
+  <Hero
+    client:load
+    title={settings.hero_title}
+    subtitle={settings.hero_subtitle}
+    imageUrl={settings.hero_image_url}
+    ctaText={settings.hero_cta_text}
+    ctaUrl={settings.hero_cta_url}
+    secondaryCtaText={settings.hero_secondary_cta_text}
+    secondaryCtaUrl={settings.hero_secondary_cta_url}
+    stats={heroStats}
+  />
+
+  <!-- Mission -->
+  <MissionSection
+    client:visible
+    title={settings.mission_title}
+    body={settings.mission_body}
+    imageUrl={settings.mission_image_url}
+  />
+
+  <!-- Pillars -->
+  <PillarsSection
+    client:visible
+    pillars={pillars}
+  />
+
+  <!-- Gallery -->
+  <GallerySection
+    client:visible
+    images={galleryImages as any}
+  />
+
+  <!-- Impact Story -->
+  <ImpactStory
+    client:visible
+    story={(story as any) ?? null}
+  />
+
+  <!-- Events Preview -->
+  <EventsPreview
+    client:visible
+    events={events as any}
+  />
+
+  <!-- CTA -->
+  <CTASection
+    client:visible
+    title={settings.cta_title}
+    body={settings.cta_body}
+    donateUrl={settings.donate_url}
+  />
+</Layout>

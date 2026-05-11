@@ -1,0 +1,185 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import ImageUpload from '../../components/admin/ImageUpload.svelte';
+import { getSettings, setSettings } from '../../lib/settings';
+import { getUploadConfig } from '../../lib/cloudinary';
+
+let saved = false;
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  try {
+    await setSettings({
+      mission_title: String(form.get('mission_title') ?? ''),
+      mission_body: String(form.get('mission_body') ?? ''),
+      mission_image_url: String(form.get('mission_image_url') ?? ''),
+      pillar_1_title: String(form.get('pillar_1_title') ?? ''),
+      pillar_1_body: String(form.get('pillar_1_body') ?? ''),
+      pillar_2_title: String(form.get('pillar_2_title') ?? ''),
+      pillar_2_body: String(form.get('pillar_2_body') ?? ''),
+      pillar_3_title: String(form.get('pillar_3_title') ?? ''),
+      pillar_3_body: String(form.get('pillar_3_body') ?? ''),
+      cta_title: String(form.get('cta_title') ?? ''),
+      cta_body: String(form.get('cta_body') ?? ''),
+      donate_url: String(form.get('donate_url') ?? ''),
+      about_hero_title: String(form.get('about_hero_title') ?? ''),
+      about_hero_body: String(form.get('about_hero_body') ?? ''),
+      about_story: String(form.get('about_story') ?? ''),
+      contact_address: String(form.get('contact_address') ?? ''),
+      contact_phone: String(form.get('contact_phone') ?? ''),
+      contact_email: String(form.get('contact_email') ?? ''),
+      footer_tagline: String(form.get('footer_tagline') ?? ''),
+      social_facebook: String(form.get('social_facebook') ?? ''),
+      social_twitter: String(form.get('social_twitter') ?? ''),
+      social_instagram: String(form.get('social_instagram') ?? ''),
+      social_youtube: String(form.get('social_youtube') ?? ''),
+    });
+    saved = true;
+  } catch (e) {
+    error = 'Failed to save. Please try again.';
+  }
+}
+
+const s = await getSettings();
+const uploadConfig = getUploadConfig();
+---
+
+<AdminLayout title="Mission & Content" activeSection="content">
+  {saved && (
+    <div class="mb-6 bg-forest/10 border border-forest/20 text-forest text-sm px-4 py-3 rounded-lg flex items-center gap-2">
+      <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+      </svg>
+      Changes saved successfully.
+    </div>
+  )}
+  {error && (
+    <div class="mb-6 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>
+  )}
+
+  <form method="POST" class="space-y-8">
+
+    <!-- Mission section -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">Mission Section (Homepage)</h3>
+      <div class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Section Title</label>
+          <input type="text" name="mission_title" value={s.mission_title} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Mission Body Text</label>
+          <textarea name="mission_body" rows="5" class="input-field resize-none">{s.mission_body}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Mission Image URL</label>
+          <input type="url" name="mission_image_url" value={s.mission_image_url} class="input-field" placeholder="https://..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillars -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">Three Pillars</h3>
+      <div class="space-y-8">
+        {[1, 2, 3].map(i => (
+          <div class="space-y-3 pb-6 border-b border-warm-100 last:border-0 last:pb-0">
+            <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Pillar {i}</h4>
+            <div>
+              <label class="block text-xs font-medium text-navy mb-1">Title</label>
+              <input type="text" name={`pillar_${i}_title`} value={s[`pillar_${i}_title`]} class="input-field" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-navy mb-1">Description</label>
+              <textarea name={`pillar_${i}_body`} rows="3" class="input-field resize-none">{s[`pillar_${i}_body`]}</textarea>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">Partner / Donate CTA Section</h3>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Headline</label>
+          <input type="text" name="cta_title" value={s.cta_title} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Sub-text</label>
+          <textarea name="cta_body" rows="2" class="input-field resize-none">{s.cta_body}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Donate / Partner URL</label>
+          <input type="url" name="donate_url" value={s.donate_url} class="input-field" />
+        </div>
+      </div>
+    </div>
+
+    <!-- About page content -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">About Page</h3>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Hero Headline</label>
+          <input type="text" name="about_hero_title" value={s.about_hero_title} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Hero Sub-text</label>
+          <textarea name="about_hero_body" rows="2" class="input-field resize-none">{s.about_hero_body}</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Our Story (longer text)</label>
+          <textarea name="about_story" rows="5" class="input-field resize-none">{s.about_story}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact details -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">Contact Information</h3>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Address</label>
+          <input type="text" name="contact_address" value={s.contact_address} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Phone</label>
+          <input type="text" name="contact_phone" value={s.contact_phone} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Email</label>
+          <input type="email" name="contact_email" value={s.contact_email} class="input-field" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-navy mb-1.5">Footer Tagline</label>
+          <input type="text" name="footer_tagline" value={s.footer_tagline} class="input-field" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Social links -->
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-5">Social Media Links</h3>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {[
+          { key: 'social_facebook', label: 'Facebook URL' },
+          { key: 'social_twitter', label: 'Twitter / X URL' },
+          { key: 'social_instagram', label: 'Instagram URL' },
+          { key: 'social_youtube', label: 'YouTube URL' },
+        ].map(({ key, label }) => (
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">{label}</label>
+            <input type="url" name={key} value={s[key] ?? ''} class="input-field" placeholder="https://..." />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="btn-primary px-10">Save All Changes</button>
+    </div>
+  </form>
+</AdminLayout>

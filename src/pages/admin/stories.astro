@@ -1,0 +1,125 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { sql } from '../../lib/db';
+
+let saved = false;
+let deleted = false;
+let error = '';
+const url = new URL(Astro.request.url);
+const editId = url.searchParams.get('edit');
+const showNew = url.searchParams.get('new') === '1';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = String(form.get('_action') ?? '');
+
+  try {
+    if (action === 'delete') {
+      await sql`DELETE FROM impact_stories WHERE id = ${String(form.get('id'))}`;
+      deleted = true;
+    } else if (action === 'upsert') {
+      const id = form.get('id') ? String(form.get('id')) : null;
+      const name = String(form.get('name') ?? '').trim();
+      const story = String(form.get('story') ?? '').trim();
+      const location = String(form.get('location') ?? '').trim();
+      const image_url = String(form.get('image_url') ?? '').trim();
+      const is_featured = form.get('is_featured') === 'on';
+
+      if (!name || !story) {
+        error = 'Name and story are required.';
+      } else if (id) {
+        await sql`
+          UPDATE impact_stories SET
+            name = ${name}, story = ${story}, location = ${location || null},
+            image_url = ${image_url || null}, is_featured = ${is_featured}
+          WHERE id = ${id}
+        `;
+        saved = true;
+      } else {
+        await sql`
+          INSERT INTO impact_stories (name, story, location, image_url, is_featured)
+          VALUES (${name}, ${story}, ${location || null}, ${image_url || null}, ${is_featured})
+        `;
+        saved = true;
+        return Astro.redirect('/admin/stories');
+      }
+    }
+  } catch {
+    error = 'Something went wrong.';
+  }
+}
+
+const stories = await sql`SELECT id, name, location, is_featured FROM impact_stories ORDER BY sort_order ASC, created_at DESC`;
+let editStory: any = null;
+if (editId) {
+  [editStory] = await sql`SELECT * FROM impact_stories WHERE id = ${editId}`;
+}
+---
+
+<AdminLayout title="Impact Stories" activeSection="stories">
+  {saved && <div class="mb-6 bg-forest/10 border border-forest/20 text-forest text-sm px-4 py-3 rounded-lg">✓ Story saved.</div>}
+  {deleted && <div class="mb-6 bg-gold/10 border border-gold/20 text-gold-700 text-sm px-4 py-3 rounded-lg">✓ Story deleted.</div>}
+  {error && <div class="mb-6 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>}
+
+  <div class="grid lg:grid-cols-2 gap-8">
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-semibold text-navy">All Stories ({stories.length})</h3>
+        <a href="/admin/stories?new=1" class="btn-primary text-xs px-5 py-2">+ Add Story</a>
+      </div>
+      <div class="space-y-3">
+        {(stories as any[]).map(s => (
+          <div class="admin-card p-4 flex items-center justify-between gap-3">
+            <div>
+              <p class="font-medium text-navy text-sm">{s.name}</p>
+              {s.location && <p class="text-xs text-gray-400">{s.location}</p>}
+              {s.is_featured && <span class="text-xs bg-gold/20 text-gold-700 px-2 py-0.5 rounded-full">Featured</span>}
+            </div>
+            <div class="flex gap-2 shrink-0">
+              <a href={`/admin/stories?edit=${s.id}`} class="text-xs text-navy/60 hover:text-navy font-medium px-2 py-1">Edit</a>
+              <form method="POST">
+                <input type="hidden" name="_action" value="delete" />
+                <input type="hidden" name="id" value={s.id} />
+                <button type="submit" class="text-xs text-red-400 hover:text-red-600 font-medium px-2 py-1" onclick="return confirm('Delete this story?')">Delete</button>
+              </form>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {(showNew || editStory) && (
+      <div>
+        <h3 class="font-semibold text-navy mb-5">{editStory ? 'Edit Story' : 'New Story'}</h3>
+        <form method="POST" class="admin-card p-6 space-y-5">
+          <input type="hidden" name="_action" value="upsert" />
+          {editStory && <input type="hidden" name="id" value={editStory.id} />}
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Person's Name *</label>
+            <input type="text" name="name" required value={editStory?.name ?? ''} class="input-field" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Their Story *</label>
+            <textarea name="story" rows="6" required class="input-field resize-none">{editStory?.story ?? ''}</textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Location</label>
+            <input type="text" name="location" value={editStory?.location ?? ''} class="input-field" placeholder="Lagos, Nigeria" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Photo URL</label>
+            <input type="url" name="image_url" value={editStory?.image_url ?? ''} class="input-field" placeholder="https://..." />
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" name="is_featured" id="is_featured_story" checked={editStory?.is_featured} class="rounded" />
+            <label for="is_featured_story" class="text-sm font-medium text-navy">Feature on homepage</label>
+          </div>
+          <div class="flex gap-3">
+            <button type="submit" class="btn-primary flex-1">{editStory ? 'Save' : 'Add Story'}</button>
+            <a href="/admin/stories" class="flex-1 text-center border border-warm-200 text-navy/60 rounded-full py-3 text-sm font-medium hover:border-navy hover:text-navy transition-colors">Cancel</a>
+          </div>
+        </form>
+      </div>
+    )}
+  </div>
+</AdminLayout>

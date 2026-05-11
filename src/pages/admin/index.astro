@@ -1,0 +1,103 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { sql } from '../../lib/db';
+
+// Quick summary stats
+const [eventsCount] = await sql`SELECT COUNT(*) as count FROM events`;
+const [galleryCount] = await sql`SELECT COUNT(*) as count FROM gallery_images`;
+const [storiesCount] = await sql`SELECT COUNT(*) as count FROM impact_stories`;
+const [subscribersCount] = await sql`SELECT COUNT(*) as count FROM newsletter_subscribers WHERE active = TRUE`;
+const recentEvents = await sql`SELECT id, title, date, status FROM events ORDER BY created_at DESC LIMIT 5`;
+---
+
+<AdminLayout title="Dashboard" activeSection="dashboard">
+  <!-- Welcome -->
+  <div class="mb-8">
+    <h2 class="font-serif text-2xl font-bold text-navy">Welcome back 👋</h2>
+    <p class="text-gray-500 text-sm mt-1">Here's a quick overview of the foundation's content.</p>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    {[
+      { label: 'Events', value: eventsCount.count, icon: '📅', href: '/admin/events', color: 'bg-navy' },
+      { label: 'Gallery Images', value: galleryCount.count, icon: '🖼️', href: '/admin/gallery', color: 'bg-forest' },
+      { label: 'Impact Stories', value: storiesCount.count, icon: '💬', href: '/admin/stories', color: 'bg-gold-700' },
+      { label: 'Subscribers', value: subscribersCount.count, icon: '📧', href: '#', color: 'bg-navy-700' },
+    ].map(stat => (
+      <a href={stat.href} class="admin-card p-5 hover:shadow-md transition-shadow group">
+        <div class={`w-10 h-10 ${stat.color} text-white rounded-xl flex items-center justify-center text-lg mb-3`}>
+          {stat.icon}
+        </div>
+        <div class="font-serif text-3xl font-bold text-navy">{stat.value}</div>
+        <div class="text-sm text-gray-500 mt-0.5">{stat.label}</div>
+      </a>
+    ))}
+  </div>
+
+  <!-- Quick actions -->
+  <div class="grid md:grid-cols-2 gap-6 mb-8">
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-4">Quick Actions</h3>
+      <div class="space-y-2">
+        {[
+          { label: 'Edit Hero Section', href: '/admin/hero', icon: '🎨' },
+          { label: 'Update Mission Text', href: '/admin/content', icon: '📝' },
+          { label: 'Add New Event', href: '/admin/events?new=1', icon: '➕' },
+          { label: 'Upload Gallery Image', href: '/admin/gallery', icon: '🖼️' },
+          { label: 'Manage Blog Posts', href: '/admin/blog', icon: '📰' },
+        ].map(action => (
+          <a
+            href={action.href}
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-navy/70 hover:text-navy hover:bg-warm-50 transition-colors"
+          >
+            <span class="text-base">{action.icon}</span>
+            {action.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="admin-card p-6">
+      <h3 class="font-semibold text-navy mb-4">Recent Events</h3>
+      {recentEvents.length > 0 ? (
+        <div class="space-y-3">
+          {(recentEvents as any[]).map(event => (
+            <div class="flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-navy truncate">{event.title}</p>
+                <p class="text-xs text-gray-400">
+                  {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </p>
+              </div>
+              <span class={`shrink-0 text-xs px-2 py-1 rounded-full font-medium ${
+                event.status === 'upcoming' ? 'bg-forest/10 text-forest' :
+                event.status === 'ongoing' ? 'bg-gold/20 text-gold-700' :
+                'bg-gray-100 text-gray-400'
+              }`}>
+                {event.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-gray-400">No events yet. <a href="/admin/events?new=1" class="text-gold font-medium hover:underline">Add one →</a></p>
+      )}
+    </div>
+  </div>
+
+  <!-- View site link -->
+  <div class="admin-card p-4 flex items-center justify-between bg-gradient-to-r from-navy to-forest">
+    <div>
+      <p class="text-white font-semibold text-sm">Your site is live</p>
+      <p class="text-white/60 text-xs">brisafoundation.com.ng</p>
+    </div>
+    <a
+      href="/"
+      target="_blank"
+      class="bg-white text-navy text-sm font-semibold px-4 py-2 rounded-full hover:bg-gold transition-colors"
+    >
+      View Site →
+    </a>
+  </div>
+</AdminLayout>

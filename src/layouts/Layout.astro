@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Navbar from '../components/Navbar.svelte';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  transparentNav?: boolean;
+}
+
+const { title, description, image, transparentNav = false } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <Navbar client:load transparent={transparentNav} />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>

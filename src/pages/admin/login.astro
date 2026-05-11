@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sql } from '../../lib/db';
+import { verifyPassword, createToken } from '../../lib/auth';
+
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const email = String(form.get('email') ?? '').trim().toLowerCase();
+  const password = String(form.get('password') ?? '');
+
+  const [user] = await sql<{ id: string; password_hash: string }[]>`
+    SELECT id, password_hash FROM admin_users WHERE email = ${email}
+  `;
+
+  if (user && (await verifyPassword(password, user.password_hash))) {
+    const token = await createToken(user.id, email);
+
+    // Update last login
+    await sql`UPDATE admin_users SET last_login = NOW() WHERE id = ${user.id}`;
+
+    Astro.cookies.set('brisa_auth', token, {
+      path: '/',
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: import.meta.env.PROD,
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
+
+    return Astro.redirect('/admin');
+  } else {
+    error = 'Invalid email or password.';
+  }
+}
+---
+
+<BaseLayout title="Admin Login">
+  <div class="min-h-screen bg-warm-50 flex items-center justify-center px-4">
+    <div class="w-full max-w-md">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 bg-navy rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <span class="font-serif text-gold font-bold text-xl">B</span>
+        </div>
+        <h1 class="font-serif text-2xl font-bold text-navy">Brisa Foundation</h1>
+        <p class="text-gray-500 text-sm mt-1">Admin Panel</p>
+      </div>
+
+      <!-- Card -->
+      <div class="bg-white rounded-2xl border border-warm-200 shadow-sm p-8">
+        <h2 class="font-semibold text-navy text-lg mb-6">Sign in to continue</h2>
+
+        {error && (
+          <div class="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg mb-5">
+            {error}
+          </div>
+        )}
+
+        <form method="POST" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5" for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="input-field"
+              placeholder="admin@brisafoundation.com.ng"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5" for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="input-field"
+              placeholder="••••••••"
+            />
+          </div>
+          <button type="submit" class="w-full btn-primary">
+            Sign In
+          </button>
+        </form>
+      </div>
+
+      <p class="text-center text-xs text-gray-400 mt-6">
+        <a href="/" class="hover:text-navy transition-colors">← Back to site</a>
+      </p>
+    </div>
+  </div>
+</BaseLayout>

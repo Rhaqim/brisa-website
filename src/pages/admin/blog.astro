@@ -1,0 +1,161 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { sql } from '../../lib/db';
+
+let saved = false;
+let deleted = false;
+let error = '';
+const url = new URL(Astro.request.url);
+const editId = url.searchParams.get('edit');
+const showNew = url.searchParams.get('new') === '1';
+
+function slugify(text: string) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = String(form.get('_action') ?? '');
+
+  try {
+    if (action === 'delete') {
+      await sql`DELETE FROM blog_posts WHERE id = ${String(form.get('id'))}`;
+      deleted = true;
+    } else if (action === 'upsert') {
+      const id = form.get('id') ? String(form.get('id')) : null;
+      const title = String(form.get('title') ?? '').trim();
+      const excerpt = String(form.get('excerpt') ?? '').trim();
+      const content = String(form.get('content') ?? '').trim();
+      const author = String(form.get('author') ?? '').trim();
+      const image_url = String(form.get('image_url') ?? '').trim();
+      const published = form.get('published') === 'on';
+      let slug = String(form.get('slug') ?? '').trim();
+      if (!slug) slug = slugify(title);
+
+      if (!title || !content) {
+        error = 'Title and content are required.';
+      } else if (id) {
+        await sql`
+          UPDATE blog_posts SET
+            title = ${title}, slug = ${slug}, excerpt = ${excerpt || null},
+            content = ${content}, author = ${author || null},
+            image_url = ${image_url || null}, published = ${published},
+            updated_at = NOW()
+          WHERE id = ${id}
+        `;
+        saved = true;
+      } else {
+        await sql`
+          INSERT INTO blog_posts (title, slug, excerpt, content, author, image_url, published)
+          VALUES (${title}, ${slug}, ${excerpt || null}, ${content}, ${author || null}, ${image_url || null}, ${published})
+        `;
+        return Astro.redirect('/admin/blog');
+      }
+    }
+  } catch {
+    error = 'Something went wrong. (Slug may already be taken — try a different one.)';
+  }
+}
+
+const posts = await sql`
+  SELECT id, title, slug, author, published, created_at
+  FROM blog_posts
+  ORDER BY created_at DESC
+`;
+let editPost: any = null;
+if (editId) {
+  [editPost] = await sql`SELECT * FROM blog_posts WHERE id = ${editId}`;
+}
+---
+
+<AdminLayout title="Blog" activeSection="blog">
+  {saved && <div class="mb-6 bg-forest/10 border border-forest/20 text-forest text-sm px-4 py-3 rounded-lg">✓ Post saved.</div>}
+  {deleted && <div class="mb-6 bg-gold/10 border border-gold/20 text-gold-700 text-sm px-4 py-3 rounded-lg">✓ Post deleted.</div>}
+  {error && <div class="mb-6 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>}
+
+  <div class="grid lg:grid-cols-5 gap-8">
+    <!-- Post list -->
+    <div class="lg:col-span-2">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-semibold text-navy">Posts ({posts.length})</h3>
+        <a href="/admin/blog?new=1" class="btn-primary text-xs px-5 py-2">+ New Post</a>
+      </div>
+      <div class="space-y-3">
+        {(posts as any[]).map(p => (
+          <div class="admin-card p-4 flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class={`text-xs font-semibold px-2 py-0.5 rounded-full ${p.published ? 'bg-forest/10 text-forest' : 'bg-gray-100 text-gray-400'}`}>
+                  {p.published ? 'Published' : 'Draft'}
+                </span>
+              </div>
+              <p class="font-medium text-navy text-sm truncate">{p.title}</p>
+              {p.author && <p class="text-xs text-gray-400">by {p.author}</p>}
+            </div>
+            <div class="flex gap-1.5 shrink-0">
+              <a href={`/admin/blog?edit=${p.id}`} class="text-xs text-navy/60 hover:text-navy font-medium px-2 py-1">Edit</a>
+              <form method="POST">
+                <input type="hidden" name="_action" value="delete" />
+                <input type="hidden" name="id" value={p.id} />
+                <button type="submit" class="text-xs text-red-400 hover:text-red-600 font-medium px-2 py-1" onclick="return confirm('Delete this post?')">Delete</button>
+              </form>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Editor -->
+    {(showNew || editPost) ? (
+      <div class="lg:col-span-3">
+        <h3 class="font-semibold text-navy mb-5">{editPost ? 'Edit Post' : 'New Post'}</h3>
+        <form method="POST" class="admin-card p-6 space-y-5">
+          <input type="hidden" name="_action" value="upsert" />
+          {editPost && <input type="hidden" name="id" value={editPost.id} />}
+
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Title *</label>
+            <input type="text" name="title" required value={editPost?.title ?? ''} class="input-field" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Slug (auto-generated if blank)</label>
+            <input type="text" name="slug" value={editPost?.slug ?? ''} class="input-field" placeholder="e.g. my-post-title" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Excerpt</label>
+            <textarea name="excerpt" rows="2" class="input-field resize-none">{editPost?.excerpt ?? ''}</textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-navy mb-1.5">Content (HTML or plain text) *</label>
+            <textarea name="content" rows="12" required class="input-field resize-y font-mono text-xs">{editPost?.content ?? ''}</textarea>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-navy mb-1.5">Author</label>
+              <input type="text" name="author" value={editPost?.author ?? ''} class="input-field" placeholder="Full name" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-navy mb-1.5">Cover Image URL</label>
+              <input type="url" name="image_url" value={editPost?.image_url ?? ''} class="input-field" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" name="published" id="published_post" checked={editPost?.published} class="rounded" />
+            <label for="published_post" class="text-sm font-medium text-navy">Publish immediately</label>
+          </div>
+          <div class="flex gap-3 pt-1">
+            <button type="submit" class="btn-primary flex-1">{editPost ? 'Save Changes' : 'Create Post'}</button>
+            <a href="/admin/blog" class="flex-1 text-center border border-warm-200 text-navy/60 rounded-full py-3 text-sm font-medium hover:border-navy hover:text-navy transition-colors">Cancel</a>
+          </div>
+        </form>
+      </div>
+    ) : (
+      <div class="hidden lg:col-span-3 lg:flex items-center justify-center text-gray-300 bg-warm-50 rounded-2xl border-2 border-dashed border-warm-200">
+        <div class="text-center">
+          <div class="text-4xl mb-3">✍️</div>
+          <p class="text-sm font-medium">Select a post or create a new one</p>
+        </div>
+      </div>
+    )}
+  </div>
+</AdminLayout>

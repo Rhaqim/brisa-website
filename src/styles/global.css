@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--color-navy: #0f1f3d;
+		--color-gold: #e9a84c;
+		--color-forest: #0d6e4f;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply font-sans text-navy antialiased;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		@apply font-serif;
+	}
+}
+
+@layer components {
+	.btn-primary {
+		@apply inline-flex items-center justify-center bg-gold text-navy font-semibold px-8 py-3.5 rounded-full text-sm transition-all duration-200 hover:bg-gold-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
+	}
+
+	.btn-outline {
+		@apply inline-flex items-center justify-center border-2 border-current font-semibold px-8 py-3 rounded-full text-sm transition-all duration-200 hover:bg-current focus:outline-none focus:ring-2 focus:ring-offset-2;
+	}
+
+	.section-tag {
+		@apply inline-flex items-center gap-2 text-forest font-semibold text-xs tracking-widest uppercase mb-4;
+	}
+
+	.section-tag::before {
+		content: "";
+		@apply block w-6 h-0.5 bg-gold;
+	}
+
+	.container-wide {
+		@apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+	}
+
+	.container-narrow {
+		@apply max-w-3xl mx-auto px-4 sm:px-6;
+	}
+
+	.input-field {
+		@apply w-full rounded-lg border border-warm-200 bg-warm-50 px-4 py-3 text-sm text-navy placeholder-gray-400 focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/10 transition-colors;
+	}
+
+	.admin-card {
+		@apply bg-white rounded-2xl border border-warm-200 shadow-sm;
+	}
+}
