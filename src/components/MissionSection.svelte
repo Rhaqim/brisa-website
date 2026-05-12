@@ -36,7 +36,7 @@
         {#if imageUrl}
           <img
             src={imageUrl}
-            alt="Brisa Women's Foundation — empowering women across Africa"
+            alt="Brisa Women's Foundation, empowering women across Africa"
             class="relative rounded-2xl object-cover w-full aspect-[4/5] shadow-2xl"
             loading="lazy"
           />

@@ -1,6 +1,6 @@
 <script lang="ts">
   export let title = 'Join Us in Changing Lives';
-  export let body = 'Every contribution — whether time, resources, or funds — helps us reach more women and children across Africa and beyond.';
+  export let body = 'Every contribution, whether time, resources, or funds, helps us reach more women and children across Africa and beyond.';
   export let donateUrl = 'https://dashboard.flutterwave.com/donate/obcebpoam3cu';
 </script>
 

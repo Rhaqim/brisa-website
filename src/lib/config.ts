@@ -1,5 +1,5 @@
 /**
- * Site-wide constants — single source of truth.
+ * Site-wide constants - single source of truth.
  * To change the domain: update `site` in astro.config.mjs (which sets import.meta.env.SITE)
  * and update CONTACT_EMAIL below.
  */

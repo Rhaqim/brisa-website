@@ -116,5 +116,5 @@
     <p class="text-red-500 text-sm">{error}</p>
   {/if}
 
-  <p class="text-gray-400 text-xs">JPG, PNG, WebP — max 10MB. Images are hosted on Cloudinary.</p>
+  <p class="text-gray-400 text-xs">JPG, PNG, WebP, max 10MB. Images are hosted on Cloudinary.</p>
 </div>

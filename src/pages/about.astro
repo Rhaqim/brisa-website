@@ -6,7 +6,7 @@ import { getSettings } from '../lib/settings';
 const s = await getSettings();
 ---
 
-<Layout title="About Us" description="Learn about Brisa Women's Foundation — our mission, story, and the women driving change across Africa.">
+<Layout title="About Us" description="Learn about Brisa Women's Foundation: our mission, story, and the women driving change across Africa.">
   <!-- Page Hero -->
   <section class="pt-36 pb-20 bg-navy relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: url('{s.hero_image_url}'); background-size: cover; background-position: center;"></div>
@@ -33,7 +33,7 @@ const s = await getSettings();
         <div class="reveal reveal-left">
           <p class="section-tag">Our Story</p>
           <h2 class="font-serif text-4xl font-bold text-navy mb-6 leading-tight">
-            1 in 6 women live below the poverty line — and we are on a mission to change that.
+            1 in 6 women live below the poverty line. We are on a mission to change that.
           </h2>
           <div class="w-12 h-1 bg-gold mb-8 rounded-full"></div>
           <div class="prose prose-lg text-gray-600 space-y-4">
@@ -42,11 +42,11 @@ const s = await getSettings();
               Founded in Lagos, Nigeria, Brisa Women's Foundation was born from a simple conviction: that access to opportunity should not be determined by geography, gender, or circumstance. We work at the intersection of education, economic empowerment, and community development.
             </p>
             <p>
-              Our programmes span vocational training, scholarship grants, parenting workshops, elderly care, and advocacy — all designed to create lasting, self-sustaining change in the communities we serve.
+              Our programmes span vocational training, scholarship grants, parenting workshops, elderly care, and advocacy, all designed to create lasting, self-sustaining change in the communities we serve.
             </p>
           </div>
         </div>
-        <div class="relative reveal reveal-right"></div>
+        <div class="relative reveal reveal-right">
           {s.mission_image_url && (
             <img
               src={s.mission_image_url}

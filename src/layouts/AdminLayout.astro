@@ -11,7 +11,7 @@ const { title, activeSection = '' } = Astro.props;
 const user = Astro.locals.user;
 ---
 
-<BaseLayout title={`Admin — ${title}`}>
+<BaseLayout title={`Admin: ${title}`}>
   <div class="min-h-screen bg-warm-50 flex">
     <!-- Sidebar -->
     <AdminSidebar client:load activeSection={activeSection} userEmail={user?.email ?? ''} />
