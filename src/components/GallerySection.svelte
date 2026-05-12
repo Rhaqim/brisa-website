@@ -12,7 +12,7 @@
 <section class="py-24 lg:py-32 bg-white overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 reveal reveal-up">
       <div>
         <p class="section-tag">Gallery</p>
         <h2 class="font-serif text-4xl sm:text-5xl font-bold text-navy leading-tight">
@@ -35,7 +35,8 @@
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {#each images.slice(0, 6) as image, i}
           <div
-            class="group overflow-hidden rounded-2xl {i === 0 ? 'row-span-2' : ''} {i === 3 ? 'col-span-2 lg:col-span-1' : ''}"
+            class="group overflow-hidden rounded-2xl {i === 0 ? 'row-span-2' : ''} {i === 3 ? 'col-span-2 lg:col-span-1' : ''} reveal reveal-scale"
+            style="transition-delay: {i * 80}ms"
           >
             <div class="relative w-full h-full {i === 0 ? 'min-h-[320px]' : 'min-h-[200px]'}">
               <img

@@ -24,7 +24,7 @@ const stories = await sql`
   <!-- Hero -->
   <section class="pt-36 pb-20 bg-forest relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-forest-dark to-navy opacity-90"></div>
-    <div class="relative max-w-4xl mx-auto px-4 text-center">
+    <div class="relative max-w-4xl mx-auto px-4 text-center reveal reveal-up">
       <p class="inline-flex items-center gap-2 text-gold text-xs font-semibold tracking-widest uppercase mb-6">
         <span class="w-6 h-0.5 bg-gold"></span>
         Our Works
@@ -40,7 +40,7 @@ const stories = await sql`
   <!-- Programme areas -->
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-2xl mb-16">
+      <div class="max-w-2xl mb-16 reveal reveal-up">
         <p class="section-tag">Our Programmes</p>
         <h2 class="font-serif text-4xl font-bold text-navy leading-tight">
           How we create change
@@ -79,8 +79,8 @@ const stories = await sql`
             body: 'Through career talks and mentorship sessions, we connect women and young people with professionals and opportunities, helping them envision and pursue ambitious futures.',
             icon: '📈',
           },
-        ].map(prog => (
-          <div class="flex gap-5 p-7 rounded-2xl border border-warm-200 bg-warm-50 hover:shadow-md transition-shadow">
+        ].map((prog, i) => (
+          <div class="flex gap-5 p-7 rounded-2xl border border-warm-200 bg-warm-50 hover:shadow-md transition-shadow reveal reveal-up" style={`transition-delay: ${i * 100}ms`}>
             <div class="text-3xl shrink-0">{prog.icon}</div>
             <div>
               <h3 class="font-serif text-xl font-bold text-navy mb-2">{prog.title}</h3>

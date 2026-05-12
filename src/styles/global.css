@@ -5,7 +5,7 @@
 @layer base {
 	:root {
 		--color-navy: #3d1035;
-		--color-gold: #dd88dd;
+		--color-gold: #d4654a;
 		--color-forest: #7a3d79;
 	}
 
@@ -58,4 +58,43 @@
 	.admin-card {
 		@apply bg-white rounded-2xl border border-warm-200 shadow-sm;
 	}
+}
+
+/* ─── Scroll-reveal animations ─────────────────────────────── */
+.reveal {
+	opacity: 0;
+	transition:
+		opacity 0.75s ease,
+		transform 0.75s ease;
+}
+.reveal-up {
+	transform: translateY(48px);
+}
+.reveal-left {
+	transform: translateX(-48px);
+}
+.reveal-right {
+	transform: translateX(48px);
+}
+.reveal-scale {
+	transform: scale(0.92);
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* Stagger helpers */
+.delay-150 {
+	transition-delay: 150ms;
+}
+.delay-300 {
+	transition-delay: 300ms;
+}
+.delay-450 {
+	transition-delay: 450ms;
+}
+.delay-600 {
+	transition-delay: 600ms;
 }

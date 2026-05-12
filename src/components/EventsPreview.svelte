@@ -28,7 +28,7 @@
 
 <section class="py-24 lg:py-32 bg-warm-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 reveal reveal-up">
       <div>
         <p class="section-tag">Events</p>
         <h2 class="font-serif text-4xl sm:text-5xl font-bold text-navy leading-tight">
@@ -48,8 +48,9 @@
 
     {#if events.length > 0}
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {#each events.slice(0, 3) as event}
-          <article class="group bg-white rounded-2xl overflow-hidden border border-warm-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        {#each events.slice(0, 3) as event, i}
+          <article class="group bg-white rounded-2xl overflow-hidden border border-warm-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 reveal reveal-up"
+                 style="transition-delay: {i * 160}ms">
             {#if event.image_url}
               <div class="overflow-hidden aspect-[16/9]">
                 <img

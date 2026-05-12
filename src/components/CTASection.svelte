@@ -9,7 +9,7 @@
   <div class="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 blur-3xl"></div>
   <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-gold/10 rounded-full translate-y-1/2 blur-3xl"></div>
 
-  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal reveal-up">
     <p class="inline-flex items-center gap-2 text-gold text-xs font-semibold tracking-widest uppercase mb-6">
       <span class="w-6 h-0.5 bg-gold"></span>
       Partner With Us

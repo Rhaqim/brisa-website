@@ -83,5 +83,38 @@ const jsonLd = JSON.stringify({
   </head>
   <body class="font-sans antialiased text-navy bg-white">
     <slot />
+    <script>
+      (() => {
+        const threshold = 0.12;
+        const rootMargin = '0px 0px -64px 0px';
+
+        function observe(root: Document | Element = document) {
+          const els = (root === document ? document : root)
+            .querySelectorAll('.reveal:not(.is-visible)');
+          if (!els.length) return;
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            });
+          }, { threshold, rootMargin });
+          els.forEach(el => io.observe(el));
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => observe());
+        } else {
+          observe();
+        }
+
+        // Re-run after any dynamic content is added (Svelte client-side hydration)
+        new MutationObserver(() => observe()).observe(
+          document.body,
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
   </body>
 </html>

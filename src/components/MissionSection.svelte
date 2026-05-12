@@ -8,7 +8,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
       <!-- Text -->
-      <div>
+      <div class="reveal reveal-left">
         <p class="section-tag">Our Mission</p>
         <h2 class="font-serif text-4xl sm:text-5xl font-bold text-navy mb-6 leading-tight">
           {title}
@@ -28,7 +28,7 @@
       </div>
 
       <!-- Image -->
-      <div class="relative">
+      <div class="relative reveal reveal-right">
         <!-- Decorative background shape -->
         <div class="absolute -top-6 -right-6 w-72 h-72 bg-gold/10 rounded-3xl -z-10"></div>
         <div class="absolute -bottom-6 -left-6 w-48 h-48 bg-forest/10 rounded-3xl -z-10"></div>

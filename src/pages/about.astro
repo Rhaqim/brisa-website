@@ -11,7 +11,7 @@ const s = await getSettings();
   <section class="pt-36 pb-20 bg-navy relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: url('{s.hero_image_url}'); background-size: cover; background-position: center;"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-navy/90 to-navy"></div>
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal reveal-up">
       <p class="inline-flex items-center gap-2 text-gold text-xs font-semibold tracking-widest uppercase mb-6">
         <span class="w-6 h-0.5 bg-gold"></span>
         About Us
@@ -30,7 +30,7 @@ const s = await getSettings();
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div>
+        <div class="reveal reveal-left">
           <p class="section-tag">Our Story</p>
           <h2 class="font-serif text-4xl font-bold text-navy mb-6 leading-tight">
             1 in 6 women live below the poverty line — and we are on a mission to change that.
@@ -46,8 +46,7 @@ const s = await getSettings();
             </p>
           </div>
         </div>
-        <div class="relative">
-          <div class="absolute -top-4 -right-4 w-64 h-64 bg-gold/10 rounded-3xl -z-10"></div>
+        <div class="relative reveal reveal-right"></div>
           {s.mission_image_url && (
             <img
               src={s.mission_image_url}
@@ -74,8 +73,8 @@ const s = await getSettings();
           { number: s.stat_2_number || '50+', label: s.stat_2_label || 'Communities Reached' },
           { number: s.stat_3_number || '200+', label: s.stat_3_label || 'Scholarships Granted' },
           { number: s.stat_4_number || '12+', label: s.stat_4_label || 'Years of Impact' },
-        ].map(stat => (
-          <div class="text-center">
+        ].map((stat, i) => (
+          <div class="text-center reveal reveal-scale" style={`transition-delay: ${i * 120}ms`}>
             <div class="font-serif text-5xl font-bold text-navy mb-2">{stat.number}</div>
             <div class="text-sm text-gray-500 font-medium">{stat.label}</div>
           </div>
@@ -87,7 +86,7 @@ const s = await getSettings();
   <!-- Values / Pillars -->
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-2xl mb-16">
+      <div class="max-w-2xl mb-16 reveal reveal-up">
         <p class="section-tag">Our Values</p>
         <h2 class="font-serif text-4xl font-bold text-navy leading-tight">
           What guides everything we do
@@ -98,8 +97,8 @@ const s = await getSettings();
           { title: 'Dignity', body: 'We approach every woman and child with respect, honouring their inherent worth and the unique circumstances of their journey.' },
           { title: 'Community', body: 'We believe change is most powerful when it comes from within. We work alongside communities, not above them.' },
           { title: 'Sustainability', body: 'We invest in skills, education, and systems that create self-sustaining change, reducing dependency over time.' },
-        ].map(v => (
-          <div class="bg-warm-50 rounded-2xl p-8 border border-warm-200">
+        ].map((v, i) => (
+          <div class="bg-warm-50 rounded-2xl p-8 border border-warm-200 reveal reveal-up" style={`transition-delay: ${i * 160}ms`}>
             <div class="w-10 h-10 bg-gold/20 rounded-xl flex items-center justify-center mb-5">
               <div class="w-3 h-3 rounded-full bg-gold"></div>
             </div>

@@ -44,7 +44,7 @@
 <section class="py-24 lg:py-32 bg-warm-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Header -->
-    <div class="max-w-2xl mb-16">
+    <div class="max-w-2xl mb-16 reveal reveal-up">
       <p class="section-tag">What We Do</p>
       <h2 class="font-serif text-4xl sm:text-5xl font-bold text-navy leading-tight">
         Three pillars of lasting change
@@ -55,7 +55,8 @@
     <div class="grid md:grid-cols-3 gap-8">
       {#each pillars as pillar, i}
         <div
-          class="group relative bg-white rounded-3xl p-8 border {colors[i].border} shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+          class="group relative bg-white rounded-3xl p-8 border {colors[i].border} shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 reveal reveal-up"
+          style="transition-delay: {i * 160}ms"
         >
           <!-- Number -->
           <div class="absolute top-6 right-8 font-serif text-6xl font-bold text-warm-200 select-none">
