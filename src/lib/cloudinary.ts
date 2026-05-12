@@ -4,9 +4,9 @@
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: import.meta.env.CLOUDINARY_CLOUD_NAME,
-  api_key:    import.meta.env.CLOUDINARY_API_KEY,
-  api_secret: import.meta.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
   secure:     true,
 });
 
@@ -15,10 +15,11 @@ cloudinary.config({
  * unsigned browser-direct uploads. No API secret is exposed to the client.
  */
 export function getUploadConfig() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME ?? '';
   return {
-    cloudName:    import.meta.env.CLOUDINARY_CLOUD_NAME as string,
-    uploadPreset: (import.meta.env.CLOUDINARY_UPLOAD_PRESET as string) ?? 'brisa_uploads',
-    uploadUrl:    `https://api.cloudinary.com/v1_1/${import.meta.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+    cloudName,
+    uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET ?? 'brisa_uploads',
+    uploadUrl:    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
   };
 }
 

@@ -1,6 +1,8 @@
 import postgres from 'postgres';
 
-const connectionString = import.meta.env.DATABASE_URL as string | undefined;
+// process.env is always read at runtime in Node.js — safer than import.meta.env
+// which Vite may bake in as undefined at build time if the var wasn't set then.
+const connectionString = process.env.DATABASE_URL;
 
 /**
  * True when DATABASE_URL is present. When false the site serves static

@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 
 function getSecret(): Uint8Array {
-  const secret = import.meta.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET;
   if (!secret) throw new Error('JWT_SECRET is not configured.');
   return new TextEncoder().encode(secret);
 }
