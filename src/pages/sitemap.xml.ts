@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
+import { SITE_URL } from '../lib/config';
 
 export const GET: APIRoute = () => {
-  const baseUrl = 'https://brisafoundation.com.ng';
   const now = new Date().toISOString().split('T')[0];
 
   const pages = [
@@ -17,7 +17,7 @@ export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map(p => `  <url>
-    <loc>${baseUrl}${p.url}</loc>
+    <loc>${SITE_URL}${p.url}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
