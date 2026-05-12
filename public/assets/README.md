@@ -5,7 +5,7 @@ Replace the `.svg` placeholder files with your real photos using the **same file
 
 ## Folder Structure
 
-```
+```shell
 public/assets/
 ├── hero/
 │   └── hero.svg          ← Full-width homepage hero background (1600×900 recommended)

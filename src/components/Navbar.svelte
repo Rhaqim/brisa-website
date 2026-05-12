@@ -42,15 +42,24 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 flex-shrink-0">
-        <div
-          class="w-9 h-9 rounded-full bg-gold flex items-center justify-center text-navy font-serif font-bold text-sm"
-        >
-          B
-        </div>
-        <span class="font-serif text-lg font-bold {textColor} transition-colors duration-300">
-          Brisa Foundation
-        </span>
+      <a href="/" class="flex-shrink-0" aria-label="Brisa Women's Foundation — home">
+        {#if isLight}
+          <img
+            src="/logo-white.svg"
+            alt="Brisa Women's Foundation"
+            class="h-10 w-auto"
+            width="320"
+            height="100"
+          />
+        {:else}
+          <img
+            src="/logo.svg"
+            alt="Brisa Women's Foundation"
+            class="h-10 w-auto"
+            width="320"
+            height="100"
+          />
+        {/if}
       </a>
 
       <!-- Desktop nav links -->
