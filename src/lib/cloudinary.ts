@@ -1,44 +1,50 @@
 // src/lib/cloudinary.ts
-// Handles server-side Cloudinary operations (signed uploads, deletions).
-// For admin uploads, we use the Cloudinary Upload API directly.
+// Server-side Cloudinary operations using the official SDK.
+// ImageUpload.svelte uses unsigned browser-direct uploads (no SDK needed client-side).
+import { v2 as cloudinary } from 'cloudinary';
 
-const CLOUD_NAME = import.meta.env.CLOUDINARY_CLOUD_NAME;
-const API_KEY = import.meta.env.CLOUDINARY_API_KEY;
-const API_SECRET = import.meta.env.CLOUDINARY_API_SECRET;
-
-export function getCloudinaryUploadUrl(): string {
-  return `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
-}
+cloudinary.config({
+  cloud_name: import.meta.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    import.meta.env.CLOUDINARY_API_KEY,
+  api_secret: import.meta.env.CLOUDINARY_API_SECRET,
+  secure:     true,
+});
 
 /**
- * Returns the config the admin frontend needs for unsigned uploads.
- * Uses an unsigned upload preset configured in your Cloudinary dashboard.
+ * Returns the config the admin frontend (ImageUpload.svelte) needs for
+ * unsigned browser-direct uploads. No API secret is exposed to the client.
  */
 export function getUploadConfig() {
   return {
-    cloudName: CLOUD_NAME,
-    uploadPreset: import.meta.env.CLOUDINARY_UPLOAD_PRESET ?? 'brisa_uploads',
-    uploadUrl: getCloudinaryUploadUrl(),
+    cloudName:    import.meta.env.CLOUDINARY_CLOUD_NAME as string,
+    uploadPreset: (import.meta.env.CLOUDINARY_UPLOAD_PRESET as string) ?? 'brisa_uploads',
+    uploadUrl:    `https://api.cloudinary.com/v1_1/${import.meta.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
   };
 }
 
 /**
- * Build a Cloudinary URL with transformations.
+ * Build a Cloudinary delivery URL with transformations using the SDK.
+ * Accepts a full URL or a bare public_id.
  */
 export function cloudinaryUrl(
-  publicId: string,
-  options: { width?: number; height?: number; quality?: number; format?: string } = {}
+  publicIdOrUrl: string,
+  options: { width?: number; height?: number; quality?: number; format?: string; crop?: string } = {}
 ): string {
-  const { width, height, quality = 80, format = 'auto' } = options;
-  const transforms = [
-    `q_${quality}`,
-    `f_${format}`,
-    width ? `w_${width}` : null,
-    height ? `h_${height}` : null,
-    'c_fill',
-  ]
-    .filter(Boolean)
-    .join(',');
+  const { width, height, quality = 80, format = 'auto', crop = 'fill' } = options;
+  return cloudinary.url(publicIdOrUrl, {
+    fetch_format: format,
+    quality,
+    width,
+    height,
+    crop,
+    secure: true,
+  });
+}
 
-  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${transforms}/${publicId}`;
+/**
+ * Delete an image from Cloudinary by its public_id.
+ * Used by admin gallery/story endpoints when an image is removed.
+ */
+export async function deleteImage(publicId: string): Promise<void> {
+  await cloudinary.uploader.destroy(publicId);
 }
