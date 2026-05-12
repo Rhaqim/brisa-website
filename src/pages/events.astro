@@ -7,19 +7,22 @@ import { FALLBACK_EVENTS } from '../lib/fallback';
 
 const s = await getSettings();
 
-const events = DB_CONNECTED
-  ? await sql`
-      SELECT id, title, description, date, end_date, location, image_url, registration_url, status, is_featured
-      FROM events
-      ORDER BY
-        CASE status
-          WHEN 'upcoming' THEN 1
-          WHEN 'ongoing' THEN 2
-          ELSE 3
-        END,
-        date ASC
-    `
-  : FALLBACK_EVENTS;
+let events: typeof FALLBACK_EVENTS = [];
+try {
+  events = DB_CONNECTED
+    ? await sql`
+        SELECT id, title, description, date, end_date, location, image_url, registration_url, status, is_featured
+        FROM events
+        ORDER BY
+          CASE status
+            WHEN 'upcoming' THEN 1
+            WHEN 'ongoing' THEN 2
+            ELSE 3
+          END,
+          date ASC
+      `
+    : FALLBACK_EVENTS;
+} catch { events = FALLBACK_EVENTS; }
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-GB', {

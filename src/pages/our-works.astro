@@ -9,18 +9,24 @@ import { FALLBACK_GALLERY, FALLBACK_STORIES } from '../lib/fallback';
 
 const s = await getSettings();
 
-const galleryImages = DB_CONNECTED
-  ? await sql`SELECT id, url, alt_text, caption FROM gallery_images ORDER BY sort_order ASC`
-  : FALLBACK_GALLERY;
+let galleryImages: typeof FALLBACK_GALLERY = [];
+try {
+  galleryImages = DB_CONNECTED
+    ? await sql`SELECT id, url, alt_text, caption FROM gallery_images ORDER BY sort_order ASC`
+    : FALLBACK_GALLERY;
+} catch { galleryImages = FALLBACK_GALLERY; }
 
-const stories = DB_CONNECTED
-  ? await sql`
-      SELECT name, story, location, image_url
-      FROM impact_stories
-      WHERE is_featured = TRUE
-      ORDER BY sort_order ASC
-    `
-  : FALLBACK_STORIES;
+let stories: typeof FALLBACK_STORIES = [];
+try {
+  stories = DB_CONNECTED
+    ? await sql`
+        SELECT name, story, location, image_url
+        FROM impact_stories
+        WHERE is_featured = TRUE
+        ORDER BY sort_order ASC
+      `
+    : FALLBACK_STORIES;
+} catch { stories = FALLBACK_STORIES; }
 ---
 
 <Layout title="Our Works" description="See the impact Brisa Women's Foundation is making across communities in Nigeria and Africa.">

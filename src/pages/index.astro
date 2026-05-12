@@ -13,37 +13,47 @@ import { FALLBACK_GALLERY, FALLBACK_EVENTS, FALLBACK_STORIES } from '../lib/fall
 
 const settings = await getSettings();
 
-// Fetch upcoming events (or use fallback when no database)
-const events = DB_CONNECTED
-  ? await sql`
-      SELECT id, title, description, date, location, image_url, status
-      FROM events
-      WHERE status = 'upcoming' AND date >= NOW()
-      ORDER BY date ASC
-      LIMIT 3
-    `
-  : FALLBACK_EVENTS.filter(e => e.status === 'upcoming').slice(0, 3);
+// Fetch upcoming events (or use fallback when no database / DB unreachable)
+let events: typeof FALLBACK_EVENTS = [];
+try {
+  events = DB_CONNECTED
+    ? await sql`
+        SELECT id, title, description, date, location, image_url, status
+        FROM events
+        WHERE status = 'upcoming' AND date >= NOW()
+        ORDER BY date ASC
+        LIMIT 3
+      `
+    : FALLBACK_EVENTS.filter(e => e.status === 'upcoming').slice(0, 3);
+} catch { events = FALLBACK_EVENTS.filter(e => e.status === 'upcoming').slice(0, 3); }
 
 // Fetch featured impact story
-const [story] = DB_CONNECTED
-  ? await sql`
-      SELECT name, story, location, image_url
-      FROM impact_stories
-      WHERE is_featured = TRUE
-      ORDER BY sort_order ASC
-      LIMIT 1
-    `
-  : FALLBACK_STORIES.filter(s => s.is_featured);
+let storyRow: typeof FALLBACK_STORIES = [];
+try {
+  storyRow = DB_CONNECTED
+    ? await sql`
+        SELECT name, story, location, image_url
+        FROM impact_stories
+        WHERE is_featured = TRUE
+        ORDER BY sort_order ASC
+        LIMIT 1
+      `
+    : FALLBACK_STORIES.filter(s => s.is_featured);
+} catch { storyRow = FALLBACK_STORIES.filter(s => s.is_featured); }
+const [story] = storyRow;
 
 // Fetch gallery images
-const galleryImages = DB_CONNECTED
-  ? await sql`
-      SELECT id, url, alt_text, caption
-      FROM gallery_images
-      ORDER BY sort_order ASC
-      LIMIT 6
-    `
-  : FALLBACK_GALLERY;
+let galleryImages: typeof FALLBACK_GALLERY = [];
+try {
+  galleryImages = DB_CONNECTED
+    ? await sql`
+        SELECT id, url, alt_text, caption
+        FROM gallery_images
+        ORDER BY sort_order ASC
+        LIMIT 6
+      `
+    : FALLBACK_GALLERY;
+} catch { galleryImages = FALLBACK_GALLERY; }
 
 const heroStats = [
   { number: settings.stat_1_number || '500+', label: settings.stat_1_label || 'Women Empowered' },
