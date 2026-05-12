@@ -4,20 +4,23 @@ import CTASection from '../components/CTASection.svelte';
 import GallerySection from '../components/GallerySection.svelte';
 import ImpactStory from '../components/ImpactStory.svelte';
 import { getSettings } from '../lib/settings';
-import { sql } from '../lib/db';
+import { sql, DB_CONNECTED } from '../lib/db';
+import { FALLBACK_GALLERY, FALLBACK_STORIES } from '../lib/fallback';
 
 const s = await getSettings();
 
-const galleryImages = await sql`
-  SELECT id, url, alt_text, caption FROM gallery_images ORDER BY sort_order ASC
-`;
+const galleryImages = DB_CONNECTED
+  ? await sql`SELECT id, url, alt_text, caption FROM gallery_images ORDER BY sort_order ASC`
+  : FALLBACK_GALLERY;
 
-const stories = await sql`
-  SELECT name, story, location, image_url
-  FROM impact_stories
-  WHERE is_featured = TRUE
-  ORDER BY sort_order ASC
-`;
+const stories = DB_CONNECTED
+  ? await sql`
+      SELECT name, story, location, image_url
+      FROM impact_stories
+      WHERE is_featured = TRUE
+      ORDER BY sort_order ASC
+    `
+  : FALLBACK_STORIES;
 ---
 
 <Layout title="Our Works" description="See the impact Brisa Women's Foundation is making across communities in Nigeria and Africa.">

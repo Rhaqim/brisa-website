@@ -1,13 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { sql } from '../../lib/db';
+import { sql, DB_CONNECTED } from '../../lib/db';
+import { FALLBACK_BLOG_POSTS } from '../../lib/fallback';
 
-const posts = await sql`
-  SELECT id, title, slug, excerpt, image_url, author, created_at
-  FROM blog_posts
-  WHERE published = true
-  ORDER BY created_at DESC
-`;
+const posts = DB_CONNECTED
+  ? await sql`
+      SELECT id, title, slug, excerpt, image_url, author, created_at
+      FROM blog_posts
+      WHERE published = true
+      ORDER BY created_at DESC
+    `
+  : FALLBACK_BLOG_POSTS;
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });

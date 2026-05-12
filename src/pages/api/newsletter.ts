@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { sql } from '../../lib/db';
+import { sql, DB_CONNECTED } from '../../lib/db';
 
 export const POST: APIRoute = async ({ request }) => {
   let body: any;
@@ -14,6 +14,11 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!email || !emailRegex.test(email)) {
     return new Response(JSON.stringify({ error: 'A valid email address is required.' }), { status: 400 });
+  }
+
+  // When no database is configured, acknowledge the subscription silently.
+  if (!DB_CONNECTED) {
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   }
 
   try {

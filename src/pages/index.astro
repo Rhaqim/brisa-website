@@ -8,35 +8,42 @@ import ImpactStory from '../components/ImpactStory.svelte';
 import EventsPreview from '../components/EventsPreview.svelte';
 import CTASection from '../components/CTASection.svelte';
 import { getSettings } from '../lib/settings';
-import { sql } from '../lib/db';
+import { sql, DB_CONNECTED } from '../lib/db';
+import { FALLBACK_GALLERY, FALLBACK_EVENTS, FALLBACK_STORIES } from '../lib/fallback';
 
 const settings = await getSettings();
 
-// Fetch upcoming events
-const events = await sql`
-  SELECT id, title, description, date, location, image_url, status
-  FROM events
-  WHERE status = 'upcoming' AND date >= NOW()
-  ORDER BY date ASC
-  LIMIT 3
-`;
+// Fetch upcoming events (or use fallback when no database)
+const events = DB_CONNECTED
+  ? await sql`
+      SELECT id, title, description, date, location, image_url, status
+      FROM events
+      WHERE status = 'upcoming' AND date >= NOW()
+      ORDER BY date ASC
+      LIMIT 3
+    `
+  : FALLBACK_EVENTS.filter(e => e.status === 'upcoming').slice(0, 3);
 
 // Fetch featured impact story
-const [story] = await sql`
-  SELECT name, story, location, image_url
-  FROM impact_stories
-  WHERE is_featured = TRUE
-  ORDER BY sort_order ASC
-  LIMIT 1
-`;
+const [story] = DB_CONNECTED
+  ? await sql`
+      SELECT name, story, location, image_url
+      FROM impact_stories
+      WHERE is_featured = TRUE
+      ORDER BY sort_order ASC
+      LIMIT 1
+    `
+  : FALLBACK_STORIES.filter(s => s.is_featured);
 
 // Fetch gallery images
-const galleryImages = await sql`
-  SELECT id, url, alt_text, caption
-  FROM gallery_images
-  ORDER BY sort_order ASC
-  LIMIT 6
-`;
+const galleryImages = DB_CONNECTED
+  ? await sql`
+      SELECT id, url, alt_text, caption
+      FROM gallery_images
+      ORDER BY sort_order ASC
+      LIMIT 6
+    `
+  : FALLBACK_GALLERY;
 
 const heroStats = [
   { number: settings.stat_1_number || '500+', label: settings.stat_1_label || 'Women Empowered' },

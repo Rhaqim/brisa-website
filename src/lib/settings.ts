@@ -1,12 +1,18 @@
-import { sql } from './db';
+import { sql, DB_CONNECTED } from './db';
+import { FALLBACK_SETTINGS } from './fallback';
 
 export type Settings = Record<string, string>;
 
 export async function getSettings(): Promise<Settings> {
-  const rows = await sql<{ key: string; value: string }[]>`
-    SELECT key, value FROM site_settings ORDER BY key
-  `;
-  return Object.fromEntries(rows.map((r) => [r.key, r.value ?? '']));
+  if (!DB_CONNECTED) return FALLBACK_SETTINGS;
+  try {
+    const rows = await sql<{ key: string; value: string }[]>`
+      SELECT key, value FROM site_settings ORDER BY key
+    `;
+    return Object.fromEntries(rows.map((r) => [r.key, r.value ?? '']));
+  } catch {
+    return FALLBACK_SETTINGS;
+  }
 }
 
 export async function getSetting(key: string): Promise<string> {
