@@ -10,11 +10,34 @@ interface Props {
 
 const {
   title,
-  description = "Brisa Women's Foundation — Empowering women and children across Africa",
+  description = "Brisa Women's Foundation empowers women and children across Africa through education, vocational training, and community support.",
   image = '/og-image.jpg',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://brisafoundation.com.ng');
+const siteUrl = 'https://brisafoundation.com.ng';
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl);
+const fullTitle = `${title} | Brisa Women's Foundation`;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  "name": "Brisa Women's Foundation",
+  "url": siteUrl,
+  "logo": `${siteUrl}/brisalogo.png`,
+  "description": "Brisa Women's Foundation empowers women and children across Africa through education, vocational training, and community support.",
+  "foundingDate": "2020",
+  "areaServed": "Africa",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Support",
+    "email": "info@brisafoundation.com.ng"
+  },
+  "sameAs": [
+    "https://www.instagram.com/brisawomensfoundation",
+    "https://www.facebook.com/brisawomensfoundation"
+  ]
+});
 ---
 
 <!doctype html>
@@ -23,20 +46,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://brisafou
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Brisa Women's Foundation</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#3D1035" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`${title} | Brisa Women's Foundation`} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="Brisa Women's Foundation" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@brisawomenfoundation" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={jsonLd} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/brisalogo.png" />

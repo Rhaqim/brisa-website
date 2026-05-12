@@ -5,8 +5,8 @@
 @layer base {
 	:root {
 		--color-navy: #3d1035;
-		--color-gold: #e9a84c;
-		--color-forest: #0d6e4f;
+		--color-gold: #dd88dd;
+		--color-forest: #7a3d79;
 	}
 
 	html {
