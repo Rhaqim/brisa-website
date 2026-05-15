@@ -8,6 +8,51 @@
  * entirely in this mode.
  */
 
+// ─── Shared types ────────────────────────────────────────────────────────────
+
+export interface FallbackGalleryImage {
+  id: string;
+  url: string;
+  alt_text: string;
+  caption: string;
+  category: string;
+}
+
+export interface FallbackStory {
+  id: string;
+  name: string;
+  story: string;
+  location: string;
+  image_url: string;
+  is_featured: boolean;
+  sort_order: number;
+}
+
+export interface FallbackEvent {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  end_date: string | null;
+  location: string;
+  image_url: string;
+  registration_url: string;
+  status: 'upcoming' | 'past';
+  is_featured: boolean;
+}
+
+export interface FallbackBlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  image_url: string;
+  author: string;
+  created_at: string;
+  published: boolean;
+  content: string;
+}
+
 // ─── Site settings ──────────────────────────────────────────────────────────
 
 export const FALLBACK_SETTINGS: Record<string, string> = {
@@ -59,7 +104,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
 // Place your images in public/assets/gallery/ using these filenames,
 // or update the urls below to match your actual filenames.
 
-export const FALLBACK_GALLERY = [
+export const FALLBACK_GALLERY: FallbackGalleryImage[] = [
   {
     id: 'g1',
     url: '/assets/gallery/gallery-1.svg',
@@ -106,7 +151,7 @@ export const FALLBACK_GALLERY = [
 
 // ─── Impact stories ──────────────────────────────────────────────────────────
 
-export const FALLBACK_STORIES = [
+export const FALLBACK_STORIES: FallbackStory[] = [
   {
     id: 's1',
     name: 'Adaeze Okonkwo',
@@ -131,7 +176,7 @@ export const FALLBACK_STORIES = [
 
 // ─── Events ──────────────────────────────────────────────────────────────────
 
-export const FALLBACK_EVENTS = [
+export const FALLBACK_EVENTS: FallbackEvent[] = [
   // {
   //   id: 'e1',
   //   title: 'Women in Business Summit 2025',
@@ -175,7 +220,7 @@ export const FALLBACK_EVENTS = [
 
 // ─── Blog posts ──────────────────────────────────────────────────────────────
 
-export const FALLBACK_BLOG_POSTS = [
+export const FALLBACK_BLOG_POSTS: FallbackBlogPost[] = [
   // {
   //   id: 'b1',
   //   title: '5 Years of Impact: How Brisa Has Grown',
