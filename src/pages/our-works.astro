@@ -5,16 +5,17 @@ import GalleryAlbums from '../components/GalleryAlbums.svelte';
 import ImpactStory from '../components/ImpactStory.svelte';
 import { getSettings } from '../lib/settings';
 import { sql, DB_CONNECTED } from '../lib/db';
-import { FALLBACK_GALLERY, FALLBACK_STORIES } from '../lib/fallback';
+import { FALLBACK_STORIES } from '../lib/fallback';
+import { readStaticGallery } from '../lib/staticGallery';
 
 const s = await getSettings();
 
-let galleryImages: typeof FALLBACK_GALLERY = [];
+let galleryImages: any[] = [];
 try {
   galleryImages = DB_CONNECTED
     ? await sql`SELECT id, url, alt_text, caption, category FROM gallery_images ORDER BY sort_order ASC`
-    : FALLBACK_GALLERY;
-} catch { galleryImages = FALLBACK_GALLERY; }
+    : readStaticGallery();
+} catch { galleryImages = readStaticGallery(); }
 
 let stories: typeof FALLBACK_STORIES = [];
 try {

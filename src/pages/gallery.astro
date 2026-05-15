@@ -3,16 +3,16 @@ import Layout from '../layouts/Layout.astro';
 import GalleryAlbums from '../components/GalleryAlbums.svelte';
 import { getSettings } from '../lib/settings';
 import { sql, DB_CONNECTED } from '../lib/db';
-import { FALLBACK_GALLERY } from '../lib/fallback';
+import { readStaticGallery } from '../lib/staticGallery';
 
 const s = await getSettings();
 
-let galleryImages: typeof FALLBACK_GALLERY = [];
+let galleryImages: any[] = [];
 try {
   galleryImages = DB_CONNECTED
     ? await sql`SELECT id, url, alt_text, caption, category FROM gallery_images ORDER BY sort_order ASC, created_at ASC`
-    : FALLBACK_GALLERY;
-} catch { galleryImages = FALLBACK_GALLERY; }
+    : readStaticGallery();
+} catch { galleryImages = readStaticGallery(); }
 
 // Derive album list server-side for structured metadata
 const albums = [...new Set(galleryImages.map((img: any) => img.category ?? 'General').filter(Boolean))].sort();

@@ -9,7 +9,8 @@ import EventsPreview from '../components/EventsPreview.svelte';
 import CTASection from '../components/CTASection.svelte';
 import { getSettings } from '../lib/settings';
 import { sql, DB_CONNECTED } from '../lib/db';
-import { FALLBACK_GALLERY, FALLBACK_EVENTS, FALLBACK_STORIES } from '../lib/fallback';
+import { FALLBACK_EVENTS, FALLBACK_STORIES } from '../lib/fallback';
+import { readStaticGallery } from '../lib/staticGallery';
 
 const settings = await getSettings();
 
@@ -43,17 +44,17 @@ try {
 const [story] = storyRow;
 
 // Fetch gallery images
-let galleryImages: typeof FALLBACK_GALLERY = [];
+let galleryImages: any[] = [];
 try {
   galleryImages = DB_CONNECTED
     ? await sql`
-        SELECT id, url, alt_text, caption
+        SELECT id, url, alt_text, caption, category
         FROM gallery_images
         ORDER BY sort_order ASC
         LIMIT 6
       `
-    : FALLBACK_GALLERY;
-} catch { galleryImages = FALLBACK_GALLERY; }
+    : readStaticGallery().slice(0, 6);
+} catch { galleryImages = readStaticGallery().slice(0, 6); }
 
 const heroStats = [
   { number: settings.stat_1_number || '500+', label: settings.stat_1_label || 'Women Empowered' },

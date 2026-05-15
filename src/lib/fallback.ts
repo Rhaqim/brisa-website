@@ -132,84 +132,84 @@ export const FALLBACK_STORIES = [
 // ─── Events ──────────────────────────────────────────────────────────────────
 
 export const FALLBACK_EVENTS = [
-  {
-    id: 'e1',
-    title: 'Women in Business Summit 2025',
-    description:
-      'A full-day summit connecting women entrepreneurs with mentors, investors, and market access opportunities across Nigeria.',
-    date: '2025-09-20T09:00:00.000Z',
-    end_date: '2025-09-20T17:00:00.000Z',
-    location: 'Transcorp Hilton, Abuja',
-    image_url: '/assets/events/event-1.svg',
-    registration_url: '/contact',
-    status: 'upcoming',
-    is_featured: true,
-  },
-  {
-    id: 'e2',
-    title: 'Annual Scholarship Awards Ceremony',
-    description:
-      'Celebrating our scholars and welcoming 50 new scholarship recipients into the Brisa family. Parents and guardians are welcome.',
-    date: '2025-10-11T10:00:00.000Z',
-    end_date: null,
-    location: 'Lagos Cultural Centre, Lagos Island',
-    image_url: '/assets/events/event-2.svg',
-    registration_url: '/contact',
-    status: 'upcoming',
-    is_featured: false,
-  },
-  {
-    id: 'e3',
-    title: 'Digital Literacy for Rural Women',
-    description:
-      'A 3-day free workshop teaching basic smartphone skills, mobile banking, and social media for business to women in Ogun State.',
-    date: '2025-08-05T08:00:00.000Z',
-    end_date: '2025-08-07T16:00:00.000Z',
-    location: 'Abeokuta Community Hall, Ogun State',
-    image_url: '/assets/events/event-3.svg',
-    registration_url: '/contact',
-    status: 'past',
-    is_featured: false,
-  },
+  // {
+  //   id: 'e1',
+  //   title: 'Women in Business Summit 2025',
+  //   description:
+  //     'A full-day summit connecting women entrepreneurs with mentors, investors, and market access opportunities across Nigeria.',
+  //   date: '2025-09-20T09:00:00.000Z',
+  //   end_date: '2025-09-20T17:00:00.000Z',
+  //   location: 'Transcorp Hilton, Abuja',
+  //   image_url: '/assets/events/event-1.svg',
+  //   registration_url: '/contact',
+  //   status: 'upcoming',
+  //   is_featured: true,
+  // },
+  // {
+  //   id: 'e2',
+  //   title: 'Annual Scholarship Awards Ceremony',
+  //   description:
+  //     'Celebrating our scholars and welcoming 50 new scholarship recipients into the Brisa family. Parents and guardians are welcome.',
+  //   date: '2025-10-11T10:00:00.000Z',
+  //   end_date: null,
+  //   location: 'Lagos Cultural Centre, Lagos Island',
+  //   image_url: '/assets/events/event-2.svg',
+  //   registration_url: '/contact',
+  //   status: 'upcoming',
+  //   is_featured: false,
+  // },
+  // {
+  //   id: 'e3',
+  //   title: 'Digital Literacy for Rural Women',
+  //   description:
+  //     'A 3-day free workshop teaching basic smartphone skills, mobile banking, and social media for business to women in Ogun State.',
+  //   date: '2025-08-05T08:00:00.000Z',
+  //   end_date: '2025-08-07T16:00:00.000Z',
+  //   location: 'Abeokuta Community Hall, Ogun State',
+  //   image_url: '/assets/events/event-3.svg',
+  //   registration_url: '/contact',
+  //   status: 'past',
+  //   is_featured: false,
+  // },
 ];
 
 // ─── Blog posts ──────────────────────────────────────────────────────────────
 
 export const FALLBACK_BLOG_POSTS = [
-  {
-    id: 'b1',
-    title: '5 Years of Impact: How Brisa Has Grown',
-    slug: '5-years-of-impact',
-    excerpt:
-      'From a small gathering of volunteers in Lagos to a nationally recognised NGO, we look back at the milestones that shaped Brisa Women\'s Foundation.',
-    image_url: '/assets/blog/blog-1.svg',
-    author: 'Brisa Editorial Team',
-    created_at: '2025-03-15T00:00:00.000Z',
-    published: true,
-    content: '',
-  },
-  {
-    id: 'b2',
-    title: 'Why Vocational Training Changes Everything',
-    slug: 'why-vocational-training-changes-everything',
-    excerpt:
-      'Economic independence is the single most powerful lever for lifting women out of poverty. Here is what our data shows after three years of skills programmes.',
-    image_url: '/assets/blog/blog-2.svg',
-    author: 'Programme Team',
-    created_at: '2025-01-28T00:00:00.000Z',
-    published: true,
-    content: '',
-  },
-  {
-    id: 'b3',
-    title: 'Introducing Our New Microloan Programme',
-    slug: 'new-microloan-programme',
-    excerpt:
-      'Starting this quarter, eligible graduates of our vocational training cohorts can apply for interest-free microloans of up to ₦150,000 to launch their businesses.',
-    image_url: '/assets/blog/blog-3.svg',
-    author: 'Finance Team',
-    created_at: '2024-11-10T00:00:00.000Z',
-    published: true,
-    content: '',
-  },
+  // {
+  //   id: 'b1',
+  //   title: '5 Years of Impact: How Brisa Has Grown',
+  //   slug: '5-years-of-impact',
+  //   excerpt:
+  //     'From a small gathering of volunteers in Lagos to a nationally recognised NGO, we look back at the milestones that shaped Brisa Women\'s Foundation.',
+  //   image_url: '/assets/blog/blog-1.svg',
+  //   author: 'Brisa Editorial Team',
+  //   created_at: '2025-03-15T00:00:00.000Z',
+  //   published: true,
+  //   content: '',
+  // },
+  // {
+  //   id: 'b2',
+  //   title: 'Why Vocational Training Changes Everything',
+  //   slug: 'why-vocational-training-changes-everything',
+  //   excerpt:
+  //     'Economic independence is the single most powerful lever for lifting women out of poverty. Here is what our data shows after three years of skills programmes.',
+  //   image_url: '/assets/blog/blog-2.svg',
+  //   author: 'Programme Team',
+  //   created_at: '2025-01-28T00:00:00.000Z',
+  //   published: true,
+  //   content: '',
+  // },
+  // {
+  //   id: 'b3',
+  //   title: 'Introducing Our New Microloan Programme',
+  //   slug: 'new-microloan-programme',
+  //   excerpt:
+  //     'Starting this quarter, eligible graduates of our vocational training cohorts can apply for interest-free microloans of up to ₦150,000 to launch their businesses.',
+  //   image_url: '/assets/blog/blog-3.svg',
+  //   author: 'Finance Team',
+  //   created_at: '2024-11-10T00:00:00.000Z',
+  //   published: true,
+  //   content: '',
+  // },
 ];
