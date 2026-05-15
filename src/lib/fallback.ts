@@ -60,7 +60,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
   hero_title: 'Empowering Women\nAcross Africa',
   hero_subtitle:
     'We walk alongside women and children, providing education, skills, and opportunity so every life can flourish.',
-  hero_image_url: '/assets/hero/hero.svg',
+  hero_image_url: '/assets/hero/hero.jpeg',
   hero_cta_text: 'Support Our Work',
   hero_cta_url: '/donate',
   hero_secondary_cta_text: 'Learn More',
@@ -80,7 +80,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
   mission_title: 'Our Mission',
   mission_body:
     'Brisa Women\'s Foundation exists to empower women and children through education, vocational training, and community support. Founded in 2020, we believe every woman deserves the tools to build a better life for herself and her family.',
-  mission_image_url: '/assets/about/mission.svg',
+  mission_image_url: '/assets/about/mission.jpeg',
 
   // Pillars
   pillar_1_title: 'Empowerment',
@@ -97,7 +97,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
   cta_title: 'Join Our Mission',
   cta_body:
     'Every contribution, large or small, helps us reach more women and children across Africa. Partner with us today.',
-  donate_url: '/donate',
+  donate_url: 'https://dashboard.flutterwave.com/donate/obcebpoam3cu',
 };
 
 // ─── Gallery images ──────────────────────────────────────────────────────────
