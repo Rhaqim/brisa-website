@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GalleryAlbums from '../components/GalleryAlbums.svelte';
+import { getSettings } from '../lib/settings';
+import { sql, DB_CONNECTED } from '../lib/db';
+import { FALLBACK_GALLERY } from '../lib/fallback';
+
+const s = await getSettings();
+
+let galleryImages: typeof FALLBACK_GALLERY = [];
+try {
+  galleryImages = DB_CONNECTED
+    ? await sql`SELECT id, url, alt_text, caption, category FROM gallery_images ORDER BY sort_order ASC, created_at ASC`
+    : FALLBACK_GALLERY;
+} catch { galleryImages = FALLBACK_GALLERY; }
+
+// Derive album list server-side for structured metadata
+const albums = [...new Set(galleryImages.map((img: any) => img.category ?? 'General').filter(Boolean))].sort();
+---
+
+<Layout
+  title="Gallery | Brisa Women's Foundation"
+  description="A photo gallery of Brisa Women's Foundation programmes, events, and community impact across Nigeria."
+>
+  <!-- Hero banner -->
+  <section class="relative pt-28 pb-20 bg-navy overflow-hidden">
+    <div class="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-forest blur-2xl -translate-x-1/2 translate-y-1/2"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="flex items-center justify-center gap-3 text-gold text-sm font-semibold tracking-widest uppercase mb-4">
+        <span class="w-6 h-0.5 bg-gold"></span>
+        Gallery
+        <span class="w-6 h-0.5 bg-gold"></span>
+      </p>
+      <h1 class="font-serif text-5xl lg:text-6xl font-bold text-white mb-4">Our Work in Pictures</h1>
+      <p class="text-white/60 text-lg max-w-xl mx-auto">
+        Explore our programmes, events, and the communities we serve across Nigeria.
+      </p>
+
+      <!-- Album count pills -->
+      {albums.length > 0 && (
+        <div class="flex flex-wrap justify-center gap-2 mt-8">
+          {albums.map((album: string) => (
+            <span class="bg-white/10 text-white/80 text-sm px-4 py-1 rounded-full border border-white/20">
+              {album}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Gallery with album tabs -->
+  <GalleryAlbums
+    client:load
+    images={galleryImages as any[]}
+    showAlbumTabs={true}
+  />
+
+</Layout>

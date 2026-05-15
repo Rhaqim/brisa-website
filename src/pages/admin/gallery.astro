@@ -37,6 +37,13 @@ if (Astro.request.method === 'POST') {
         await sql`UPDATE gallery_images SET sort_order = ${i} WHERE id = ${ids[i]}`;
       }
       saved = true;
+    } else if (action === 'edit_album') {
+      const id = String(form.get('id') ?? '').trim();
+      const album = String(form.get('album') ?? 'General').trim();
+      if (id) {
+        await sql`UPDATE gallery_images SET category = ${album || 'General'} WHERE id = ${id}`;
+        saved = true;
+      }
     }
   } catch (e) {
     error = 'Something went wrong.';
@@ -48,6 +55,11 @@ const images = await sql`
   FROM gallery_images
   ORDER BY sort_order ASC, created_at ASC
 `;
+
+// Unique album names for the datalist autocomplete
+const existingAlbums = [...new Set(
+  (images as any[]).map(img => img.category).filter(Boolean)
+)].sort();
 
 const uploadConfig = getUploadConfig();
 ---
@@ -92,14 +104,21 @@ const uploadConfig = getUploadConfig();
           <input type="text" name="caption" class="input-field" placeholder="Short caption…" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-navy mb-1.5">Category</label>
-          <select name="category" class="input-field">
-            <option value="general">General</option>
-            <option value="empowerment">Empowerment</option>
-            <option value="education">Education</option>
-            <option value="community">Community</option>
-            <option value="events">Events</option>
-          </select>
+          <label class="block text-sm font-medium text-navy mb-1.5">Album / Tag</label>
+          <input
+            type="text"
+            name="category"
+            class="input-field"
+            list="album-suggestions"
+            placeholder="e.g. Market Support Imo 2025"
+            autocomplete="off"
+          />
+          <datalist id="album-suggestions">
+            {existingAlbums.map((album: string) => (
+              <option value={album} />
+            ))}
+          </datalist>
+          <p class="text-xs text-gray-400 mt-1">Type a new album name or choose an existing one.</p>
         </div>
         <button type="submit" class="w-full btn-primary">Add to Gallery</button>
       </form>
@@ -136,9 +155,34 @@ const uploadConfig = getUploadConfig();
                   </button>
                 </form>
               </div>
-              <!-- Category badge -->
-              <div class="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">
-                {image.category}
+              <!-- Album badge + inline edit -->
+              <div class="absolute top-2 left-2 right-2 flex items-center justify-between gap-1">
+                <span class="bg-black/60 text-white text-xs px-2 py-0.5 rounded-full truncate max-w-[70%]">
+                  {image.category || 'General'}
+                </span>
+                <button
+                  type="button"
+                  class="bg-navy/80 text-white text-xs px-2 py-0.5 rounded-full hover:bg-navy transition-colors"
+                  onclick={`document.getElementById('album-edit-${image.id}').classList.toggle('hidden')`}
+                >
+                  Edit
+                </button>
+              </div>
+              <!-- Inline album edit form -->
+              <div id={`album-edit-${image.id}`} class="hidden absolute inset-x-0 bottom-10 px-2">
+                <form method="POST" class="flex gap-1 bg-white rounded-lg p-2 shadow-lg">
+                  <input type="hidden" name="_action" value="edit_album" />
+                  <input type="hidden" name="id" value={image.id} />
+                  <input
+                    type="text"
+                    name="album"
+                    list="album-suggestions"
+                    value={image.category || ''}
+                    placeholder="Album name"
+                    class="flex-1 text-xs border border-warm-200 rounded px-2 py-1 text-navy outline-none focus:ring-1 focus:ring-navy"
+                  />
+                  <button type="submit" class="text-xs bg-navy text-white px-2 py-1 rounded hover:bg-navy/80">Save</button>
+                </form>
               </div>
             </div>
           ))}

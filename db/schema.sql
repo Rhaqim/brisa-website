@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS gallery_images (
   thumbnail_url TEXT,
   caption       TEXT,
   alt_text      TEXT,
-  category      VARCHAR(100) DEFAULT 'general',
+  category      VARCHAR(100) DEFAULT 'General', -- album/tag name, e.g. "Market Support Imo 2025"
   sort_order    INTEGER DEFAULT 0,
   created_at    TIMESTAMPTZ DEFAULT NOW()
 );

@@ -65,36 +65,42 @@ export const FALLBACK_GALLERY = [
     url: '/assets/gallery/gallery-1.svg',
     alt_text: 'Women at a vocational training workshop',
     caption: 'Vocational Training',
+    category: 'Vocational Training',
   },
   {
     id: 'g2',
     url: '/assets/gallery/gallery-2.svg',
     alt_text: 'Children receiving school supplies',
     caption: 'Scholarship Programme',
+    category: 'Education',
   },
   {
     id: 'g3',
     url: '/assets/gallery/gallery-3.svg',
     alt_text: 'Community gathering and outreach',
     caption: 'Community Outreach',
+    category: 'Community Outreach',
   },
   {
     id: 'g4',
     url: '/assets/gallery/gallery-4.svg',
     alt_text: 'Parenting workshop session',
     caption: 'Parenting Workshop',
+    category: 'Community Outreach',
   },
   {
     id: 'g5',
     url: '/assets/gallery/gallery-5.svg',
     alt_text: 'Women entrepreneurs at a microfinance event',
     caption: 'Microfinance Programme',
+    category: 'Vocational Training',
   },
   {
     id: 'g6',
     url: '/assets/gallery/gallery-6.svg',
     alt_text: 'Career development seminar for young women',
     caption: 'Career Development',
+    category: 'Education',
   },
 ];
 

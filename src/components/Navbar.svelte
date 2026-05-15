@@ -18,6 +18,7 @@
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
     { href: '/our-works', label: 'Our Works' },
+    { href: '/gallery', label: 'Gallery' },
     { href: '/events', label: 'Events' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },

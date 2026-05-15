@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.svelte';
-import GallerySection from '../components/GallerySection.svelte';
+import GalleryAlbums from '../components/GalleryAlbums.svelte';
 import ImpactStory from '../components/ImpactStory.svelte';
 import { getSettings } from '../lib/settings';
 import { sql, DB_CONNECTED } from '../lib/db';
@@ -12,7 +12,7 @@ const s = await getSettings();
 let galleryImages: typeof FALLBACK_GALLERY = [];
 try {
   galleryImages = DB_CONNECTED
-    ? await sql`SELECT id, url, alt_text, caption FROM gallery_images ORDER BY sort_order ASC`
+    ? await sql`SELECT id, url, alt_text, caption, category FROM gallery_images ORDER BY sort_order ASC`
     : FALLBACK_GALLERY;
 } catch { galleryImages = FALLBACK_GALLERY; }
 
@@ -101,8 +101,8 @@ try {
     </div>
   </section>
 
-  <!-- Gallery -->
-  <GallerySection client:visible images={galleryImages as any} />
+  <!-- Gallery with album tabs -->
+  <GalleryAlbums client:visible images={galleryImages as any[]} showAlbumTabs={true} />
 
   <!-- Stories -->
   {(stories as any[]).map(story => (
