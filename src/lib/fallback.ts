@@ -79,7 +79,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
   // Mission
   mission_title: 'Our Mission',
   mission_body:
-    'Brisa Women\'s Foundation exists to empower women and children through education, vocational training, and community support. Founded in 2020, we believe every woman deserves the tools to build a better life for herself and her family.',
+    'Brisa Women\'s Foundation exists to empower women and children through education, vocational training, and community support. Founded in 2015, we believe every woman deserves the tools to build a better life for herself and her family.',
   mission_image_url: '/assets/about/mission.jpeg',
 
   // Pillars

@@ -37,7 +37,7 @@
         class="inline-flex items-center gap-2 border border-gold/40 bg-gold/10 text-gold text-xs font-semibold tracking-widest uppercase px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-        Empowering Women Since 2020
+        Empowering Women Since 2015
         <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
       </div>
 
