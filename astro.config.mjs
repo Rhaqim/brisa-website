@@ -1,12 +1,10 @@
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
-import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://brisafoundation.com.ng',
-  output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  site: 'https://brisafoundation.org',
+  output: 'static',
   integrations: [
     svelte(),
     sitemap(),
