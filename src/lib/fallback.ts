@@ -57,9 +57,9 @@ export interface FallbackBlogPost {
 
 export const FALLBACK_SETTINGS: Record<string, string> = {
   // Hero
-  hero_title: 'Empowering Women\nAcross Africa',
+  hero_title: 'Empowering Vulnerable Women\nAcross Nigeria',
   hero_subtitle:
-    'We walk alongside women and children, providing education, skills, and opportunity so every life can flourish.',
+    'A catalyst for economic independence, social inclusion, and community advancement — walking alongside widows, single mothers, and young women to build lasting change.',
   hero_image_url: '/assets/hero/hero.jpeg',
   hero_cta_text: 'Support Our Work',
   hero_cta_url: '/donate',
@@ -67,36 +67,39 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
   hero_secondary_cta_url: '/about',
 
   // Stats
-  stat_1_number: '500+',
+  stat_1_number: '5,000+',
   stat_1_label: 'Women Empowered',
-  stat_2_number: '50+',
-  stat_2_label: 'Communities Reached',
-  stat_3_number: '200+',
-  stat_3_label: 'Scholarships Granted',
-  stat_4_number: '12+',
+  stat_2_number: '1,500+',
+  stat_2_label: 'Skills Trained',
+  stat_3_number: '4,800+',
+  stat_3_label: 'Grants Awarded',
+  stat_4_number: '11+',
   stat_4_label: 'Years of Impact',
 
   // Mission
   mission_title: 'Our Mission',
   mission_body:
-    'Brisa Women\'s Foundation exists to empower women and children through education, vocational training, and community support. Founded in 2015, we believe every woman deserves the tools to build a better life for herself and her family.',
+    'To empower vulnerable women, widows, single mothers, and young ladies by providing access to practical skills training, entrepreneurship development, financial support, mentorship, healthcare support, and holistic community-based programs that foster long-term stability and self-reliance. We are also committed to strengthening families through education support initiatives, including parental empowerment programs, back-to-school interventions, and scholarship opportunities for vulnerable children.',
   mission_image_url: '/assets/about/mission.jpeg',
 
   // Pillars
-  pillar_1_title: 'Empowerment',
+  pillar_1_title: 'Financial Empowerment',
   pillar_1_body:
-    'We equip women with the skills, knowledge, and confidence to take control of their futures through hands-on training and mentorship.',
-  pillar_2_title: 'Encouragement',
+    'We provide grants and microloans to women entrepreneurs, supporting business start-ups and expansions so women can achieve lasting economic independence.',
+  pillar_2_title: 'Entrepreneurship Development',
   pillar_2_body:
-    'Through community networks and peer support, we build resilience and remind every woman that she does not walk alone.',
-  pillar_3_title: 'Enlightenment',
+    'Through business training, capacity-building, and mentorship from experienced professionals, we connect women to networks and market opportunities that grow their enterprises.',
+  pillar_3_title: 'Healthcare & Wellness',
   pillar_3_body:
-    'Education is the greatest equaliser. We fund scholarships, literacy programmes, and career development workshops.',
+    'We run health awareness campaigns and wellness outreach programmes to ensure women and their communities have access to the care and knowledge they need to thrive.',
+  pillar_4_title: 'Skill Acquisition',
+  pillar_4_body:
+    'Our vocational training programmes equip women with practical, income-generating skills — from tailoring and baking to digital literacy — creating pathways to self-reliance.',
 
   // CTA
   cta_title: 'Join Our Mission',
   cta_body:
-    'Every contribution, large or small, helps us reach more women and children across Africa. Partner with us today.',
+    'Every contribution, large or small, helps us reach more women and children across Nigeria. Partner with us today.',
   donate_url: 'https://dashboard.flutterwave.com/donate/obcebpoam3cu',
 };
 

@@ -6,38 +6,47 @@
 
   export let pillars: Pillar[] = [
     {
-      title: 'Empowerment',
-      body: 'We engage in youth and women empowerment programs, vocational training, skill acquisition and career talks, and offer educational scholarships to less privileged children.',
+      title: 'Financial Empowerment',
+      body: 'We provide grants and microloans to women entrepreneurs, supporting business start-ups and expansions so women can achieve lasting economic independence.',
     },
     {
-      title: 'Encouragement',
-      body: "We support aged people, build and finance old people's homes, support motherless and orphanage homes, and contribute to the development of the elderly.",
+      title: 'Entrepreneurship Development',
+      body: 'Through business training, capacity-building, and mentorship from experienced professionals, we connect women to networks and market opportunities.',
     },
     {
-      title: 'Enlightenment',
-      body: "We run parenting seminars and workshops that increase parents' knowledge, skills, confidence, and sense of empowerment in the parenting role.",
+      title: 'Healthcare & Wellness',
+      body: 'We run health awareness campaigns and wellness outreach programmes to ensure women and their communities have the care and knowledge they need.',
+    },
+    {
+      title: 'Skill Acquisition',
+      body: 'Our vocational training programmes equip women with practical, income-generating skills — creating pathways to self-reliance and dignity.',
     },
   ];
 
   const icons = [
-    // Hands raised (empowerment)
+    // Financial empowerment – coins/banknotes
     `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
     </svg>`,
-    // Heart / support
+    // Entrepreneurship – briefcase
+    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+    </svg>`,
+    // Healthcare – heart
     `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
     </svg>`,
-    // Light bulb (enlightenment)
+    // Skill acquisition – wrench/tool
     `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
     </svg>`,
   ];
 
   const colors = [
-    { bg: 'bg-navy/5', icon: 'text-navy', border: 'border-navy/10' },
+    { bg: 'bg-navy/5',   icon: 'text-navy',   border: 'border-navy/10' },
     { bg: 'bg-forest/5', icon: 'text-forest', border: 'border-forest/10' },
-    { bg: 'bg-gold/10', icon: 'text-gold-700', border: 'border-gold/20' },
+    { bg: 'bg-gold/10',  icon: 'text-gold-700', border: 'border-gold/20' },
+    { bg: 'bg-navy/10',  icon: 'text-navy',   border: 'border-navy/20' },
   ];
 </script>
 
@@ -47,12 +56,12 @@
     <div class="max-w-2xl mb-16 reveal reveal-up">
       <p class="section-tag">What We Do</p>
       <h2 class="font-serif text-4xl sm:text-5xl font-bold text-navy leading-tight">
-        Three pillars of lasting change
+        Our programmes, your future
       </h2>
     </div>
 
     <!-- Pillars grid -->
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
       {#each pillars as pillar, i}
         <div
           class="group relative bg-white rounded-3xl p-8 border {colors[i].border} shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 reveal reveal-up"

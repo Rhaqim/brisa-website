@@ -6,7 +6,7 @@ import { getSettings } from '../lib/settings';
 const s = await getSettings();
 ---
 
-<Layout title="About Us" description="Learn about Brisa Women's Foundation: our mission, story, and the women driving change across Africa.">
+<Layout title="About Us | Brisa Women's Foundation" description="Brisa Women's Foundation is a Nigerian non-profit committed to empowering vulnerable women, widows, and single mothers through skills training, financial support, and community-based programmes.">
   <!-- Page Hero -->
   <section class="pt-36 pb-20 bg-navy relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: url('{s.hero_image_url}'); background-size: cover; background-position: center;"></div>
@@ -33,16 +33,21 @@ const s = await getSettings();
         <div class="reveal reveal-left">
           <p class="section-tag">Our Story</p>
           <h2 class="font-serif text-4xl font-bold text-navy mb-6 leading-tight">
-            1 in 6 women live below the poverty line. We are on a mission to change that.
+            Born from lived experience. Built to create lasting change.
           </h2>
           <div class="w-12 h-1 bg-gold mb-8 rounded-full"></div>
           <div class="prose prose-lg text-gray-600 space-y-4">
-            <p>{s.about_story}</p>
             <p>
-              Founded in Lagos, Nigeria, Brisa Women's Foundation was born from a simple conviction: that access to opportunity should not be determined by geography, gender, or circumstance. We work at the intersection of education, economic empowerment, and community development.
+              Brisa Women Foundation is a registered non-profit organisation committed to empowering vulnerable women and young ladies through sustainable initiatives that restore dignity, create opportunities, and promote long-term economic independence.
             </p>
             <p>
-              Our programmes span vocational training, scholarship grants, parenting workshops, elderly care, and advocacy, all designed to create lasting, self-sustaining change in the communities we serve.
+              Founded in 2015 by Amb. Delphine Oyinye Nwachukwu, the foundation was born out of lived experience, resilience, and a deep understanding of the realities faced by widows, single mothers, and low-income women across Nigeria. What began as a personal journey of survival and determination has grown into a movement dedicated to helping women rebuild their lives and support their families with confidence and dignity.
+            </p>
+            <p>
+              Over the years, the foundation has empowered more than 1,500 women through skills acquisition programmes and provided financial grants and aid to over 4,800 women across different communities — spanning Lagos State, Imo State, and other parts of Nigeria through both physical and virtual outreach.
+            </p>
+            <p>
+              Our work is especially focused on reaching women affected by poverty, unemployment, displacement, and social exclusion, including communities in the South-East region impacted by insecurity and economic disruption.
             </p>
           </div>
         </div>
@@ -94,9 +99,9 @@ const s = await getSettings();
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         {[
-          { title: 'Dignity', body: 'We approach every woman and child with respect, honouring their inherent worth and the unique circumstances of their journey.' },
-          { title: 'Community', body: 'We believe change is most powerful when it comes from within. We work alongside communities, not above them.' },
-          { title: 'Sustainability', body: 'We invest in skills, education, and systems that create self-sustaining change, reducing dependency over time.' },
+          { title: 'Dignity', body: 'We approach every woman and child with deep respect, honouring their inherent worth and the unique circumstances of their journey. Empowerment must never feel like charity.' },
+          { title: 'Community', body: 'We believe change is most powerful when it comes from within. We work alongside communities, not above them, building partnerships rooted in trust and mutual respect.' },
+          { title: 'Sustainability', body: 'We invest in skills, entrepreneurship, and systems that create self-sustaining change — so every woman we reach can stand firmly on her own and lift others in turn.' },
         ].map((v, i) => (
           <div class="bg-warm-50 rounded-2xl p-8 border border-warm-200 reveal reveal-up" style={`transition-delay: ${i * 160}ms`}>
             <div class="w-10 h-10 bg-gold/20 rounded-xl flex items-center justify-center mb-5">
