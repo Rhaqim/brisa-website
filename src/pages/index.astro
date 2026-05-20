@@ -87,39 +87,33 @@ const pillars = [
 
   <!-- Mission -->
   <MissionSection
-    client:visible
     title={settings.mission_title}
     body={settings.mission_body}
     imageUrl={settings.mission_image_url}
   />
 
-  <!-- Pillars -->
+  <!-- Pillars — no client hydration needed (static display only) -->
   <PillarsSection
-    client:visible
     pillars={pillars}
   />
 
   <!-- Gallery -->
   <GallerySection
-    client:visible
     images={galleryImages as any}
   />
 
   <!-- Impact Story -->
   <ImpactStory
-    client:visible
     story={(story as any) ?? null}
   />
 
   <!-- Events Preview -->
   <EventsPreview
-    client:visible
     events={events as any}
   />
 
   <!-- CTA -->
   <CTASection
-    client:visible
     title={settings.cta_title}
     body={settings.cta_body}
     donateUrl={settings.donate_url}
