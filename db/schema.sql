@@ -118,7 +118,7 @@ INSERT INTO site_settings (key, value) VALUES
   ('cta_title',    'Join Us in Changing Lives'),
   ('cta_body',     'Every contribution — whether time, resources, or funds — helps us reach more women and children across Africa and beyond.'),
   ('donate_url',   'https://dashboard.flutterwave.com/donate/obcebpoam3cu'),
-  ('volunteer_url','https://brisafoundation.com.ng/volunteer'),
+  ('volunteer_url','https://brisafoundation.org/volunteer'),
 
   ('about_hero_title', 'Driven by Purpose, Guided by Compassion'),
   ('about_hero_body',  'We believe every woman deserves the opportunity to reach her full potential, regardless of where she was born.'),
@@ -126,7 +126,7 @@ INSERT INTO site_settings (key, value) VALUES
 
   ('contact_address', 'Lagos, Nigeria'),
   ('contact_phone',   '+2348183929999'),
-  ('contact_email',   'info@brisafoundation.com.ng'),
+  ('contact_email',   'info@brisafoundation.org'),
 
   ('footer_tagline',  'Bringing first-world woman empowerment to local women and children across Africa and beyond.'),
 

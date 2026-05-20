@@ -5,7 +5,7 @@
  */
 
 export const SITE_URL =
-  ((import.meta.env.SITE as string | undefined) ?? 'https://brisafoundation.com.ng')
+  ((import.meta.env.SITE as string | undefined) ?? 'https://brisafoundation.org')
     .replace(/\/$/, '');
 
-export const CONTACT_EMAIL = 'info@brisafoundation.com.ng';
+export const CONTACT_EMAIL = 'info@brisafoundation.org';

@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 
 const sql = postgres(process.env.DATABASE_URL);
 
-const EMAIL = 'admin@brisafoundation.com.ng';
+const EMAIL = 'admin@brisafoundation.org';
 const PASSWORD = 'BrisaAdmin2024!'; // Change this immediately
 
 const hash = await bcrypt.hash(PASSWORD, 12);
