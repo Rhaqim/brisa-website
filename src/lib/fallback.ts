@@ -62,7 +62,7 @@ export const FALLBACK_SETTINGS: Record<string, string> = {
     'A catalyst for economic independence, social inclusion, and community advancement — walking alongside widows, single mothers, and young women to build lasting change.',
   hero_image_url: '/assets/hero/hero.jpeg',
   hero_cta_text: 'Support Our Work',
-  hero_cta_url: '/donate',
+  hero_cta_url: 'https://dashboard.flutterwave.com/donate/obcebpoam3cu',
   hero_secondary_cta_text: 'Learn More',
   hero_secondary_cta_url: '/about',
 
