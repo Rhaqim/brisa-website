@@ -46,7 +46,7 @@
       <a href="/" class="flex-shrink-0" aria-label="Brisa Women's Foundation — home">
         {#if isLight}
           <img
-            src="/logo-white.svg"
+            src="/logo-dark-bg.png"
             alt="Brisa Women's Foundation"
             class="h-10 w-auto"
             width="320"
@@ -54,7 +54,7 @@
           />
         {:else}
           <img
-            src="/logo.svg"
+            src="/logo-light-white-bg.png"
             alt="Brisa Women's Foundation"
             class="h-10 w-auto"
             width="320"
