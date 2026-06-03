@@ -185,8 +185,8 @@ export const FALLBACK_EVENTS: FallbackEvent[] = [
     title: 'Flavours of Empowerment',
     description:
       'She Cooks, She Creates, She Conquers: A potluck experience like no other. Come with a dish. Name it. Own it. Share the story behind it.',
-    date: '2025-09-20T09:00:00.000Z',
-    end_date: '2026-06-27T10:00:00.000Z',
+    date: '2026-06-27T10:00:00.000Z',
+    end_date: '2026-06-27T16:00:00.000Z',
     location: 'Falomi, Ikoyi, Lagos',
     image_url: '/assets/events/event1.jpeg',
     registration_url: 'https://forms.gle/BygtsEiz461gVSSH8',
