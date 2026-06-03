@@ -180,19 +180,19 @@ export const FALLBACK_STORIES: FallbackStory[] = [
 // ─── Events ──────────────────────────────────────────────────────────────────
 
 export const FALLBACK_EVENTS: FallbackEvent[] = [
-  // {
-  //   id: 'e1',
-  //   title: 'Women in Business Summit 2025',
-  //   description:
-  //     'A full-day summit connecting women entrepreneurs with mentors, investors, and market access opportunities across Nigeria.',
-  //   date: '2025-09-20T09:00:00.000Z',
-  //   end_date: '2025-09-20T17:00:00.000Z',
-  //   location: 'Transcorp Hilton, Abuja',
-  //   image_url: '/assets/events/event-1.svg',
-  //   registration_url: '/contact',
-  //   status: 'upcoming',
-  //   is_featured: true,
-  // },
+  {
+    id: 'e1',
+    title: 'Flavours of Empowerment',
+    description:
+      'She Cooks, She Creates, She Conquers: A potluck experience like no other. Come with a dish. Name it. Own it. Share the story behind it.',
+    date: '2025-09-20T09:00:00.000Z',
+    end_date: '2026-06-27T10:00:00.000Z',
+    location: 'Falomi, Ikoyi, Lagos',
+    image_url: '/assets/events/event1.jpeg',
+    registration_url: 'https://forms.gle/BygtsEiz461gVSSH8',
+    status: 'upcoming',
+    is_featured: true,
+  },
   // {
   //   id: 'e2',
   //   title: 'Annual Scholarship Awards Ceremony',
