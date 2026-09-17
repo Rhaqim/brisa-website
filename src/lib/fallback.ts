@@ -181,6 +181,20 @@ export const FALLBACK_STORIES: FallbackStory[] = [
 
 export const FALLBACK_EVENTS: FallbackEvent[] = [
   {
+    id: 'e2',
+    title: 'Brisa Skill Acquisition Programme',
+    description:
+      'From Learning to Earning: Building Sustainable Livelihoods. Hands-on training in digital skills, fashion design, baking & pastry, graphic design, hair & beauty, event planning, makeup artistry and photography. Learn a skill. Build your future. Create wealth that lasts.',
+    date: '2026-10-01T09:00:00.000Z',
+    end_date: null,
+    location: '',
+    image_url: '/assets/events/event2.jpeg',
+    registration_url:
+      'https://docs.google.com/forms/d/e/1FAIpQLSfcVuPbjA42MoEXYkxBGBI-kfJacWZTUdTt-5RiC4PuAvKwXw/viewform',
+    status: 'upcoming',
+    is_featured: true,
+  },
+  {
     id: 'e1',
     title: 'Flavours of Empowerment',
     description:
@@ -190,8 +204,8 @@ export const FALLBACK_EVENTS: FallbackEvent[] = [
     location: 'Falomi, Ikoyi, Lagos',
     image_url: '/assets/events/event1.jpeg',
     registration_url: 'https://forms.gle/BygtsEiz461gVSSH8',
-    status: 'upcoming',
-    is_featured: true,
+    status: 'past',
+    is_featured: false,
   },
   // {
   //   id: 'e2',
