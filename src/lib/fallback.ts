@@ -238,6 +238,28 @@ export const FALLBACK_EVENTS: FallbackEvent[] = [
 // ─── Blog posts ──────────────────────────────────────────────────────────────
 
 export const FALLBACK_BLOG_POSTS: FallbackBlogPost[] = [
+  {
+    id: 'b1',
+    title: 'The Importance of Communities and Relationships in Blooming Where You Are Planted',
+    slug: 'communities-and-relationships',
+    excerpt:
+      'Discover how the right community and meaningful relationships can shape your growth, strengthen your purpose and help you bloom where you are planted.',
+    image_url: '/assets/blog/communities_and_relationships.jpg',
+    author: 'Brisa Editorial Team',
+    created_at: '2026-10-04T00:00:00.000Z',
+    published: true,
+    content: `
+      <h2>The Power of the Right Community: How Your Environment Shapes Your Growth and Success</h2>
+      <h2>Building Meaningful Relationships: The Role of Connection, Support and Collaboration in Personal Growth</h2>
+      <h2>Three Article Ideas</h2>
+      <h3>Article 1: Bloom Where You Are Planted: Making the Most of Your Community</h3>
+      <p>Your environment can influence your confidence, opportunities, mindset and ability to thrive. This article can explore how to identify the value within your present community, contribute meaningfully and grow without constantly wishing to be somewhere else.</p>
+      <h3>Article 2: The Power of Relationships in Personal and Professional Growth</h3>
+      <p>No one truly succeeds alone. Explore how healthy relationships provide encouragement, knowledge, opportunities, accountability and emotional support and why the quality of the relationships we cultivate matters.</p>
+      <h3>Article 3: Finding Your People: When Community Becomes a Catalyst for Purpose</h3>
+      <p>The right community can help people discover their gifts, strengthen their purpose and move from potential to impact. This article can discuss intentional networking, mentorship, collaboration and creating communities where women can thrive.</p>
+    `,
+  },
   // {
   //   id: 'b1',
   //   title: '5 Years of Impact: How Brisa Has Grown',
