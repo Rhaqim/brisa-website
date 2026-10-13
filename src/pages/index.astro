@@ -7,6 +7,7 @@ import GallerySection from '../components/GallerySection.svelte';
 import ImpactStory from '../components/ImpactStory.svelte';
 import EventsPreview from '../components/EventsPreview.svelte';
 import CTASection from '../components/CTASection.svelte';
+import BooksSection from '../components/BooksSection.astro';
 import { getSettings } from '../lib/settings';
 import { sql, DB_CONNECTED } from '../lib/db';
 import { FALLBACK_EVENTS, FALLBACK_STORIES } from '../lib/fallback';
@@ -111,6 +112,9 @@ const pillars = [
   <EventsPreview
     events={events as any}
   />
+
+  <!-- Books -->
+  <BooksSection />
 
   <!-- CTA -->
   <CTASection

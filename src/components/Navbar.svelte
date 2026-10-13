@@ -21,6 +21,7 @@
     { href: '/gallery', label: 'Gallery' },
     { href: '/events', label: 'Events' },
     { href: '/blog', label: 'Blog' },
+    { href: '/#books', label: 'Books' },
     { href: '/contact', label: 'Contact' },
   ];
 
@@ -64,7 +65,7 @@
       </a>
 
       <!-- Desktop nav links -->
-      <div class="hidden lg:flex items-center gap-8">
+      <div class="hidden lg:flex items-center gap-5 xl:gap-8">
         {#each links as link}
           <a
             href={link.href}

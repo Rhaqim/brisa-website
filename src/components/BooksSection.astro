@@ -1,0 +1,70 @@
+---
+const books = [
+  {
+    title: 'Words to Manifestation',
+    volume: 'Volume 1',
+    ebook: 'https://selar.com/wordstomanifestationvol1ebook',
+    paperback: 'https://selar.com/wordtomanifestationsvol1paperback',
+  },
+  {
+    title: 'Words to Manifestation',
+    volume: 'Volume 2',
+    ebook: 'https://selar.com/wordstomanifestationvol2ebook',
+    paperback: 'https://selar.com/wordstomanifestationvol2paperback',
+  },
+  {
+    title: 'Thought to Manifestations',
+    volume: '',
+    ebook: 'https://selar.com/t2mebook',
+    paperback: 'https://selar.com/thought2manifestationspaperback',
+  },
+];
+---
+
+<section id="books" aria-labelledby="books-heading" class="scroll-mt-20 py-24 lg:py-32 bg-warm-50">
+  <div class="container-wide">
+    <div class="max-w-2xl mb-12">
+      <p class="section-tag">Books</p>
+      <h2 id="books-heading" class="font-serif text-4xl sm:text-5xl font-bold text-navy leading-tight mb-5">
+        Choose your next read
+      </h2>
+      <p class="text-gray-600 leading-relaxed">
+        Explore the collection in your preferred format. Choose an ebook or paperback and click to buy on Selar.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {books.map(book => (
+        <article class="flex flex-col bg-white border border-warm-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-gold/15 text-gold-700 flex items-center justify-center mb-6" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C9 4.5 5.5 4 2.5 5v14c3-1 6.5-.5 9.5 1.5M12 6.5c3-2 6.5-2.5 9.5-1.5v14c-3-1-6.5-.5-9.5 1.5m0-14v14" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-navy mb-3">
+            {book.title}
+            {book.volume && <span class="block text-lg text-forest mt-2">{book.volume}</span>}
+          </h3>
+          <p class="text-sm text-gray-500 mb-8">Available as an ebook and paperback.</p>
+          <div class="mt-auto flex flex-col gap-3">
+            <a
+              href={book.ebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Buy ${book.title} ${book.volume} ebook on Selar (opens in a new tab)`}
+              class="inline-flex items-center justify-center bg-navy text-white font-semibold px-5 py-3 rounded-full text-sm hover:bg-navy-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy"
+            >Buy ebook <span aria-hidden="true" class="ml-2">↗</span></a>
+            <a
+              href={book.paperback}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Buy ${book.title} ${book.volume} paperback on Selar (opens in a new tab)`}
+              class="inline-flex items-center justify-center border border-navy/25 text-navy font-semibold px-5 py-3 rounded-full text-sm hover:bg-warm-100 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy"
+            >Buy paperback <span aria-hidden="true" class="ml-2">↗</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="text-sm text-gray-500 mt-6">Purchase links open Selar in a new tab.</p>
+  </div>
+</section>
